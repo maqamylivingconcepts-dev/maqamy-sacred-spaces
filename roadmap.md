@@ -1,5 +1,10 @@
 # MAQAMY rebuild
 
+## Story page redesign
+- [x] Rebuild /story as five bilingual chapters with an arched opening image, a Ḥuḍūr al-Qalb feature band and a closing invitation
+- [x] Add owner-replaceable craft and philosophy images to the Assets tab
+- [x] Verify desktop and mobile in English and Malay
+
 ## Order deletion and admin product checkout
 - [x] Add owner-only order deletion (with invoice cleanup) to the admin console
 - [x] Create Stripe prices on demand for admin-added products so checkout opens

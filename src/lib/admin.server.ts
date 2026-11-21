@@ -382,7 +382,7 @@ export const actions: Record<string, Handler> = {
   },
   saveSiteAsset: async (input, c) => {
     master(c);
-    const d = z.object({ key: z.enum(["logo", "home", "story", "auth", "noor", "janna"]), url: safeMediaUrl }).parse(input);
+    const d = z.object({ key: z.enum(["logo", "home", "story", "storyCraft", "storyPhilosophy", "auth", "noor", "janna"]), url: safeMediaUrl }).parse(input);
     const { error } = await (await db()).from("site_assets").upsert({ key: d.key, url: d.url, updated_at: new Date().toISOString() });
     if (error) throw new AdminError("Image could not be saved.");
     return d;
