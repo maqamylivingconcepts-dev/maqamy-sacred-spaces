@@ -71,8 +71,8 @@ function Eyebrow({ children, light = false }: { children: React.ReactNode; light
 
 function IconBadge({ icon: Icon, light = false }: { icon: LucideIcon; light?: boolean }) {
   return (
-    <span className={`flex size-11 items-center justify-center rounded-full border ${light ? "border-brand-gold-soft/40 text-brand-gold-soft" : "border-brand-gold/40 bg-brand-cream text-brand-gold"}`}>
-      <Icon className="size-5" strokeWidth={1.5} />
+    <span className={`flex size-14 items-center justify-center rounded-full border ${light ? "border-brand-gold-soft/40 text-brand-gold-soft" : "border-brand-gold/40 bg-brand-cream text-brand-gold"}`}>
+      <Icon className="size-7" />
     </span>
   );
 }
@@ -194,7 +194,7 @@ function PrivacyPage() {
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {rights.map((r) => (
               <article key={r.title.en} className="border-t-2 border-brand-gold bg-card p-6">
-                <r.icon className="size-6 text-brand-gold" strokeWidth={1.5} />
+                <r.icon className="size-8 text-brand-gold" />
                 <h3 className="mt-5 font-display text-2xl font-light">{b(r.title)}</h3>
                 <p className="mt-2 text-sm leading-6 text-brand-forest/70">{b(r.text)}</p>
               </article>
@@ -207,7 +207,7 @@ function PrivacyPage() {
       {/* Contact */}
       <section className="px-5 pb-24 sm:px-8 lg:pb-32">
         <div className="mx-auto max-w-3xl border border-brand-gold/30 bg-card px-6 py-12 text-center shadow-[0_24px_60px_-44px_rgb(0_0_0/0.4)] sm:px-12">
-          <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-forest text-brand-gold-soft"><Mail className="size-6" strokeWidth={1.5} /></span>
+          <span className="mx-auto flex size-16 items-center justify-center rounded-full bg-brand-forest text-brand-gold-soft"><Mail className="size-7" /></span>
           <h2 className="type-heading mt-6 font-display text-3xl font-light sm:text-4xl">{t("Questions? We're here.", "Ada soalan? Kami di sini.")}</h2>
           <p className="type-body mx-auto mt-4 max-w-md text-base leading-7 text-brand-forest/70">{t("Write to us about your data at any time. Please include the email address on your account.", "Hubungi kami tentang data anda bila-bila masa. Sila sertakan alamat e-mel akaun anda.")}</p>
           <a href={`mailto:${CONTACT_EMAIL}?subject=Privacy%20request`} className="mt-6 inline-block break-all border-b border-brand-gold pb-1 font-display text-xl text-brand-forest hover:text-brand-gold">{CONTACT_EMAIL}</a>
