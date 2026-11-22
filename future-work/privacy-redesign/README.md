@@ -16,13 +16,17 @@ The current page no longer matches how the site works:
 
 ## What the new page has
 
-1. Plain-language heading, intro and **last updated** date.
-2. Three promise badges: never sold · card details stay with Stripe · delete any time.
-3. "On this page" contents list (sticky on desktop).
-4. Numbered sections: Who we are · What we collect (table) · How we use it ·
-   Who can see it · How long we keep it · Your rights (PDPA, 21-day reply) ·
-   How we protect it · Changes to this policy.
-5. Dark "Questions or requests?" contact box.
+A softer, brand-styled layout rather than a document:
+
+1. **Welcome** — "Your privacy, *held with care.*", a short warm intro, the
+   last-updated date and three icon promises (never sold · cards stay with
+   Stripe · yours to remove).
+2. **What we collect** — four icon cards: account, orders, payment, device.
+3. **How we use it** — "To bring your space home." with a checklist.
+4. **Who can see it** — "A small, trusted circle." five icon tiles.
+5. **Keeping it safe** — dark band: how it's protected and how long it's kept.
+6. **Your rights** — four gold-edged tiles under the PDPA: see, correct, delete, say no.
+7. **Contact** — centred card with the privacy email and company details.
 
 Everything is in English and Malay. The Copyright box moves out (it isn't a
 privacy topic; the footer already shows © 2026).
