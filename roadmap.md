@@ -3,7 +3,7 @@
 ## Privacy page refresh
 - [x] Rewrite /privacy to match how the site works (Stripe, admin access, PDPA rights, retention, contact)
 - [x] Brand-styled layout: promises, icon cards, trusted-circle tiles, rights tiles, contact card
-- [ ] Add registered company name and SSM number
+- [x] Add SSM registration number 202603244326 (003889427-H)
 
 ## Banner caption
 - [x] Replace the outlined banner title with a clean Aime caption: gold rule, white title, smaller gold subtitle

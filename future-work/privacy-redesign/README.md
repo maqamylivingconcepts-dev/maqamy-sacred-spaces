@@ -2,8 +2,7 @@
 
 **Applied to the live site on 22 November 2026** with contact email
 maqamylivingconcepts@gmail.com and softened retention/partner wording.
-Still to add: registered company name and SSM number (`COMPANY_NAME` in
-`src/routes/privacy.tsx`).
+SSM registration number 202603244326 (003889427-H) added.
 
  Previews: `preview-desktop.png`,
 `preview-mobile.png`, `preview-desktop-malay.png`.

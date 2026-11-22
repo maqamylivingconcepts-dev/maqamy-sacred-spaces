@@ -22,8 +22,8 @@ export const Route = createFileRoute("/privacy")({
 });
 
 const CONTACT_EMAIL = "maqamylivingconcepts@gmail.com";
-/** Registered name and SSM number, e.g. "MAQAMY Living Concepts (SSM 123456-X)". */
-const COMPANY_NAME = "MAQAMY Living Concepts";
+/** Registered name with SSM registration number (new and old formats). */
+const COMPANY_NAME = "MAQAMY Living Concepts, 202603244326 (003889427-H),";
 const LAST_UPDATED = { en: "22 November 2026", ms: "22 November 2026" };
 
 type Bi = { en: string; ms: string };
