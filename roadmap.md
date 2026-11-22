@@ -1,5 +1,10 @@
 # MAQAMY rebuild
 
+## Banner caption
+- [x] Replace the outlined banner title with a clean Aime caption: gold rule, white title, smaller gold subtitle
+- [x] Add separate Title and Subtitle fields to Admin → Banners (stored together, no schema change)
+- [x] Verify the caption on desktop and mobile
+
 ## Order deletion and admin product checkout
 - [x] Add owner-only order deletion (with invoice cleanup) to the admin console
 - [x] Create Stripe prices on demand for admin-added products so checkout opens

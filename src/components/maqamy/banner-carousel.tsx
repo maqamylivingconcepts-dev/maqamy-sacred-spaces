@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
+import { splitBannerTitle } from "@/lib/banner-title";
 
 type Banner = Tables<"banners">;
 const IMAGE_MS = 5000;
@@ -81,11 +82,9 @@ export function BannerCarousel({ banners, tone = "light" }: { banners: Banner[];
                   }}
                 />
               ) : (
-                <img src={banner.url} alt={banner.title || "MAQAMY feature"} className="h-full w-full object-cover" />
+                <img src={banner.url} alt={splitBannerTitle(banner.title).title || "MAQAMY feature"} className="h-full w-full object-cover" />
               )}
-              {banner.title ? (
-                <p className={`maqamy-banner-title absolute left-5 right-5 break-words text-sm font-semibold uppercase leading-6 sm:left-8 sm:right-8 ${banner.kind === "video" ? "bottom-16" : "bottom-8"}`}>{banner.title}</p>
-              ) : null}
+              {banner.title ? <BannerTitle title={banner.title} raised={banner.kind === "video"} /> : null}
             </div>
           );
         })}
@@ -118,5 +117,18 @@ export function BannerCarousel({ banners, tone = "light" }: { banners: Banner[];
         ) : null}
       </div>
     </section>
+  );
+}
+
+/** Caption in Aime: short gold rule, white title, smaller gold subtitle. */
+function BannerTitle({ title: stored, raised }: { title: string; raised: boolean }) {
+  const { title, subtitle } = splitBannerTitle(stored);
+  if (!title && !subtitle) return null;
+  return (
+    <div className={`maqamy-banner-title pointer-events-none absolute left-5 right-5 font-sans sm:left-8 sm:right-8 lg:left-12 ${raised ? "bottom-16" : "bottom-8"}`}>
+      <span className="block h-px w-8 bg-brand-gold sm:w-12" aria-hidden="true" />
+      {title ? <p className="type-banner mt-2 break-words text-xl font-normal leading-tight text-white sm:mt-3 sm:text-3xl">{title}</p> : null}
+      {subtitle ? <p className="mt-1.5 break-words text-[10px] font-normal uppercase leading-4 tracking-[0.12em] text-brand-gold-soft sm:mt-2 sm:text-xs sm:leading-5">{subtitle}</p> : null}
+    </div>
   );
 }

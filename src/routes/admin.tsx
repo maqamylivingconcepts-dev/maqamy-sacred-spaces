@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { BANNER_TITLE_MAX, joinBannerTitle, splitBannerTitle } from "@/lib/banner-title";
 import { Ban, LogOut, Minus, PackageX, PackagePlus, Plus, Save, ShieldCheck, Trash2, Upload, UserPlus } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -559,11 +560,11 @@ function BannersPanel() {
       {banners.map((banner) => (
         <article key={banner.id} className="border border-brand-gold/25 bg-card">
           <div className="aspect-video bg-brand-ink">
-            {banner.kind === "video" ? <video src={banner.url} className="h-full w-full object-cover" muted playsInline /> : <img src={banner.url} alt={banner.title} className="h-full w-full object-cover" />}
+            {banner.kind === "video" ? <video src={banner.url} className="h-full w-full object-cover" muted playsInline /> : <img src={banner.url} alt={splitBannerTitle(banner.title).title} className="h-full w-full object-cover" />}
           </div>
           <div className="p-4">
             <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-brand-gold">{banner.kind} · order {banner.display_order}{banner.active ? "" : " · hidden"}</p>
-            <p className="mt-1 truncate text-sm font-semibold">{banner.title || "Untitled"}</p>
+            <p className="mt-1 truncate text-sm font-semibold">{splitBannerTitle(banner.title).title || "Untitled"}</p>{splitBannerTitle(banner.title).subtitle ? <p className="truncate text-xs uppercase tracking-[0.12em] text-brand-gold">{splitBannerTitle(banner.title).subtitle}</p> : null}
             <div className="mt-4 flex gap-2">
               <Button variant="outline" size="sm" onClick={() => { setEditing(banner); setAdding(false); }}>Edit</Button>
               <Button variant="ghost" size="sm" className="text-destructive" onClick={() => void remove(banner)}><Trash2 /></Button>
@@ -579,7 +580,8 @@ function BannersPanel() {
 function BannerForm({ banner, nextOrder, onDone, onCancel }: { banner: AdminBanner | null; nextOrder: number; onDone: () => void; onCancel: () => void }) {
   const [kind, setKind] = useState<"image" | "video">(banner?.kind === "video" ? "video" : "image");
   const [url, setUrl] = useState(banner?.url ?? "");
-  const [title, setTitle] = useState(banner?.title ?? "");
+  const [title, setTitle] = useState(() => splitBannerTitle(banner?.title).title);
+  const [subtitle, setSubtitle] = useState(() => splitBannerTitle(banner?.title).subtitle);
   const [order, setOrder] = useState(banner?.display_order ?? nextOrder);
   const [active, setActive] = useState(banner?.active ?? true);
   const [busy, setBusy] = useState(false);
@@ -611,7 +613,7 @@ function BannerForm({ banner, nextOrder, onDone, onCancel }: { banner: AdminBann
     } catch { toast.error("Enter a valid direct image or video URL."); return; }
     setBusy(true);
     try {
-      await saveAdminBanner({ data: { ...(banner ? { id: banner.id } : {}), kind, url, title, display_order: order, active } });
+      await saveAdminBanner({ data: { ...(banner ? { id: banner.id } : {}), kind, url, title: joinBannerTitle(title, subtitle), display_order: order, active } });
       toast.success("Banner saved");
       onDone();
     } catch (e) { toast.error(errorText(e, "Banner could not be saved.")); setBusy(false); }
@@ -625,7 +627,10 @@ function BannerForm({ banner, nextOrder, onDone, onCancel }: { banner: AdminBann
           {(["image", "video"] as const).map((k) => <Button key={k} type="button" variant={kind === k ? "maqamy" : "outline"} size="sm" onClick={() => setKind(k)}>{k === "image" ? "Picture" : "Video"}</Button>)}
         </div>
       </Field>
-      <Field label="Title (optional)"><Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Shown on the slide" /></Field>
+      <div className="grid gap-5">
+        <Field label="Title (optional)"><Input value={title} maxLength={60} onChange={(e) => setTitle(e.target.value)} placeholder="White, e.g. Syafi Naira" /></Field>
+        <Field label="Subtitle (optional)"><Input value={subtitle} maxLength={BANNER_TITLE_MAX - 63} onChange={(e) => setSubtitle(e.target.value)} placeholder="Gold, e.g. MAQAMY™ · Virtual Brand Ambassador" /></Field>
+      </div>
       <BannerMediaInput url={url} kind={kind} busy={busy} onUrl={setUrl} onKind={setKind} onUpload={upload} />
       <Field label="Slide order"><Input type="number" value={order} onChange={(e) => setOrder(Number(e.target.value) || 0)} /></Field>
       <Field label="Visibility">
