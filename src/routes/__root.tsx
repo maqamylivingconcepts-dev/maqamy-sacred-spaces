@@ -81,12 +81,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "MAQAMY" },
       // Link-preview thumbnail; absolute so it works from every host.
-      { property: "og:image", content: "https://maqamy.co/og-image.jpg" },
+      { property: "og:image", content: "https://maqamy.co/og-image.jpg?v=2" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "MAQAMY" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "https://maqamy.co/og-image.jpg" },
+      { name: "twitter:image", content: "https://maqamy.co/og-image.jpg?v=2" },
     ],
     links: [
       { rel: "preload", href: "/fonts/Aime-Regular-Trial.ttf", as: "font", type: "font/ttf", crossOrigin: "anonymous" },
