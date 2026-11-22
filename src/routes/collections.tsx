@@ -11,6 +11,9 @@ import { useCart } from "@/lib/use-cart";
 import { useProducts, type CatalogueProduct } from "@/lib/use-products";
 import { msCollections, trWord, useLang } from "@/lib/i18n";
 
+/** Product "Details" and "The collection" lists are hidden until final specs are ready; set to true to show them again. */
+const SHOW_PRODUCT_DETAILS = false;
+
 export const Route = createFileRoute("/collections")({
   head: () => ({ meta: [
     { title: "Noor & Janna Collections — MAQAMY" },
@@ -233,7 +236,7 @@ function ProductDetail({ item, signedIn, onAdd, onBack }: {
           </div>
         </div>
 
-        {collection ? (
+        {SHOW_PRODUCT_DETAILS && collection ? (
           <div className="mx-auto mt-14 grid max-w-4xl gap-10 md:grid-cols-2">
             <DetailList title={t("Details", "Butiran")} items={ms?.details ?? collection.details} />
             <DetailList title={t("The collection", "Koleksi")} items={ms?.collection ?? collection.collection} />
