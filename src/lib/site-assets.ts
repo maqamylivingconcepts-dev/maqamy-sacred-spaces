@@ -8,8 +8,6 @@ export const SITE_ASSET_SLOTS = [
   { key: "logo", label: "MAQAMY logo (header, footer, sign-in, home)", fallback: brandAssets.logo },
   { key: "home", label: "Home page background", fallback: brandAssets.desert },
   { key: "story", label: "Story / About us page image", fallback: brandAssets.prayerSpace },
-  { key: "storyCraft", label: "Story page — craft chapter image", fallback: collections[1]!.image },
-  { key: "storyPhilosophy", label: "Story page — Ḥuḍūr al-Qalb backdrop", fallback: brandAssets.desert },
   { key: "auth", label: "Sign-in & register page image", fallback: brandAssets.auth },
   { key: "noor", label: "Noor collection product image", fallback: collections[0]!.image },
   { key: "janna", label: "Janna collection product image", fallback: collections[1]!.image },
