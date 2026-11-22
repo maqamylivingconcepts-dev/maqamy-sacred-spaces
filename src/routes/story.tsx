@@ -62,7 +62,7 @@ function StoryPage() {
       <section className="bg-brand-forest px-5 py-20 text-brand-cream sm:px-8 lg:py-28">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
           <h2 className="type-heading max-w-3xl font-display text-2xl font-light leading-tight sm:text-3xl">{t("MAQAMY — Designed for the presence of the heart.", "MAQAMY — Direka untuk kehadiran hati.")}</h2>
-          <Button asChild variant="gold" size="lg"><Link to="/collections">{t("Explore Noor & Janna", "Terokai Noor & Janna")} <ArrowRight /></Link></Button>
+          <Button asChild variant="gold" size="lg"><Link to="/collections">{t("Explore Collections", "Terokai Koleksi")} <ArrowRight /></Link></Button>
         </div>
       </section>
       <SiteFooter />
