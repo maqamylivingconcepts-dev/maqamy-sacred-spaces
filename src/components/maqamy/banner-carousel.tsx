@@ -126,9 +126,9 @@ function BannerTitle({ title: stored, raised }: { title: string; raised: boolean
   if (!title && !subtitle) return null;
   return (
     <div className={`maqamy-banner-title pointer-events-none absolute left-5 right-5 font-sans sm:left-8 sm:right-8 lg:left-12 ${raised ? "bottom-16" : "bottom-8"}`}>
-      <span className="block h-px w-8 bg-brand-gold sm:w-12" aria-hidden="true" />
-      {title ? <p className="type-banner mt-2 break-words text-xl font-normal leading-tight text-white sm:mt-3 sm:text-3xl">{title}</p> : null}
-      {subtitle ? <p className="mt-1.5 break-words text-[10px] font-normal uppercase leading-4 tracking-[0.12em] text-brand-gold-soft sm:mt-2 sm:text-xs sm:leading-5">{subtitle}</p> : null}
+      <span className="block h-px w-6 bg-brand-gold sm:w-12" aria-hidden="true" />
+      {title ? <p className="type-banner mt-1.5 break-words text-base font-normal leading-tight text-white sm:mt-3 sm:text-3xl">{title}</p> : null}
+      {subtitle ? <p className="mt-1 break-words text-[9px] font-normal uppercase leading-[14px] tracking-[0.1em] text-brand-gold-soft sm:mt-2 sm:text-xs sm:leading-5">{subtitle}</p> : null}
     </div>
   );
 }
