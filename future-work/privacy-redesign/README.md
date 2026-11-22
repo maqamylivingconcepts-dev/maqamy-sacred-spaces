@@ -1,6 +1,11 @@
-# Privacy page redesign (proposal)
+# Privacy page redesign
 
-Not applied to the live site. Previews: `preview-desktop.png`,
+**Applied to the live site on 22 November 2026** with contact email
+maqamylivingconcepts@gmail.com and softened retention/partner wording.
+Still to add: registered company name and SSM number (`COMPANY_NAME` in
+`src/routes/privacy.tsx`).
+
+ Previews: `preview-desktop.png`,
 `preview-mobile.png`, `preview-desktop-malay.png`.
 
 ## Why
