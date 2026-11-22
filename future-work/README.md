@@ -13,3 +13,4 @@ git apply future-work/<proposal>/<proposal>.patch
 | Proposal | What it does |
 | --- | --- |
 | [`story-redesign/`](story-redesign/) | Rebuilds `/story` as five bilingual editorial chapters with an arched opening image, a Ḥuḍūr al-Qalb feature band and a closing invitation; adds two owner-replaceable story images. |
+| [`privacy-redesign/`](privacy-redesign/) | Rewrites `/privacy` to match how the site works today (Stripe payments, admin access, PDPA rights, retention, contact) with a contents list, data table and promise badges. |

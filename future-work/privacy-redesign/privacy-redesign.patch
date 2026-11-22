@@ -1,0 +1,214 @@
+diff --git a/src/routes/privacy.tsx b/src/routes/privacy.tsx
+index a662141..b7faf6f 100644
+--- a/src/routes/privacy.tsx
++++ b/src/routes/privacy.tsx
+@@ -1,4 +1,5 @@
+ import { createFileRoute } from "@tanstack/react-router";
++import { CreditCard, ShieldCheck, Trash2 } from "lucide-react";
+ import { SiteFooter, SiteHeader } from "@/components/maqamy/site-chrome";
+ import { useCart } from "@/lib/use-cart";
+ import { useLang } from "@/lib/i18n";
+@@ -7,15 +8,9 @@ export const Route = createFileRoute("/privacy")({
+   head: () => ({
+     meta: [
+       { title: "Privacy Policy — MAQAMY Living Concepts" },
+-      {
+-        name: "description",
+-        content: "Privacy policy for MAQAMY Living Concepts customer accounts, delivery details, and shopping cart information.",
+-      },
++      { name: "description", content: "How MAQAMY Living Concepts collects, uses and protects your personal data under Malaysia's Personal Data Protection Act 2010." },
+       { property: "og:title", content: "Privacy Policy — MAQAMY Living Concepts" },
+-      {
+-        property: "og:description",
+-        content: "How MAQAMY Living Concepts protects customer account, contact, address, and order information.",
+-      },
++      { property: "og:description", content: "What we collect, why, who can see it, how long we keep it, and how to exercise your rights." },
+       { property: "og:type", content: "website" },
+       { name: "twitter:card", content: "summary_large_image" },
+     ],
+@@ -23,47 +18,152 @@ export const Route = createFileRoute("/privacy")({
+   component: PrivacyPage,
+ });
+ 
++/* Owner to confirm before publishing. */
++const CONTACT_EMAIL = "[privacy contact email]";
++const COMPANY_DETAILS = "[company name & SSM registration no.]";
++const LAST_UPDATED = { en: "22 November 2026", ms: "22 November 2026" };
++
++type Bi = { en: string; ms: string };
++type Section = { id: string; title: Bi; body?: Bi[]; list?: Bi[]; table?: { head: [Bi, Bi]; rows: [Bi, Bi][] } };
++
++const sections: Section[] = [
++  {
++    id: "who-we-are",
++    title: { en: "Who we are", ms: "Siapa kami" },
++    body: [{
++      en: `MAQAMY Living Concepts (${COMPANY_DETAILS}) is a Malaysian design house. We are responsible for the personal data you give us through maqamy.co and handle it in line with the Personal Data Protection Act 2010 (PDPA).`,
++      ms: `MAQAMY Living Concepts (${COMPANY_DETAILS}) ialah rumah reka bentuk Malaysia. Kami bertanggungjawab ke atas data peribadi yang anda berikan melalui maqamy.co dan mengendalikannya selaras dengan Akta Perlindungan Data Peribadi 2010 (PDPA).`,
++    }],
++  },
++  {
++    id: "what-we-collect",
++    title: { en: "What we collect", ms: "Apa yang kami kumpul" },
++    table: {
++      head: [{ en: "Type", ms: "Jenis" }, { en: "Details", ms: "Butiran" }],
++      rows: [
++        [{ en: "Account", ms: "Akaun" }, { en: "Full name, email, phone number, delivery address and a securely encrypted password.", ms: "Nama penuh, e-mel, nombor telefon, alamat penghantaran dan kata laluan yang disulitkan dengan selamat." }],
++        [{ en: "Orders", ms: "Pesanan" }, { en: "Order number, collections and packages chosen, quantities, prices, pre-order status, invoices and delivery details.", ms: "Nombor pesanan, koleksi dan pakej yang dipilih, kuantiti, harga, status prapesanan, invois dan butiran penghantaran." }],
++        [{ en: "Payments", ms: "Pembayaran" }, { en: "Payment status and amount only. Card details are entered directly with Stripe — we never see or store them.", ms: "Status dan jumlah pembayaran sahaja. Butiran kad dimasukkan terus dengan Stripe — kami tidak pernah melihat atau menyimpannya." }],
++        [{ en: "On your device", ms: "Pada peranti anda" }, { en: "Your language choice and sign-in session, kept in your browser.", ms: "Pilihan bahasa dan sesi log masuk anda, disimpan dalam pelayar anda." }],
++      ],
++    },
++  },
++  {
++    id: "how-we-use",
++    title: { en: "How we use it", ms: "Cara kami menggunakannya" },
++    list: [
++      { en: "To create and manage your account and saved cart.", ms: "Untuk mencipta dan mengurus akaun serta troli tersimpan anda." },
++      { en: "To process orders and pre-orders, take payment and issue invoices.", ms: "Untuk memproses pesanan dan prapesanan, menerima bayaran dan mengeluarkan invois." },
++      { en: "To arrange delivery and installation of your prayer space.", ms: "Untuk mengatur penghantaran dan pemasangan ruang solat anda." },
++      { en: "To send account emails such as sign-up confirmation and password reset.", ms: "Untuk menghantar e-mel akaun seperti pengesahan pendaftaran dan tetapan semula kata laluan." },
++      { en: "To keep the records Malaysian law requires.", ms: "Untuk menyimpan rekod yang dikehendaki undang-undang Malaysia." },
++    ],
++    body: [{ en: "We do not use your data for advertising, and we never sell it.", ms: "Kami tidak menggunakan data anda untuk pengiklanan, dan tidak sekali-kali menjualnya." }],
++  },
++  {
++    id: "who-can-see",
++    title: { en: "Who can see it", ms: "Siapa yang boleh melihatnya" },
++    list: [
++      { en: "You — only your own profile, cart and orders.", ms: "Anda — hanya profil, troli dan pesanan anda sendiri." },
++      { en: "MAQAMY's authorised team — to prepare, deliver and support your order.", ms: "Pasukan MAQAMY yang diberi kuasa — untuk menyediakan, menghantar dan menyokong pesanan anda." },
++      { en: "Stripe — our payment provider, to process your payment securely.", ms: "Stripe — penyedia pembayaran kami, untuk memproses bayaran anda dengan selamat." },
++      { en: "Delivery and installation partners — only the name, phone and address needed for your order.", ms: "Rakan penghantaran dan pemasangan — hanya nama, telefon dan alamat yang diperlukan untuk pesanan anda." },
++      { en: "Authorities — only when the law requires it.", ms: "Pihak berkuasa — hanya apabila dikehendaki undang-undang." },
++    ],
++  },
++  {
++    id: "how-long",
++    title: { en: "How long we keep it", ms: "Berapa lama kami menyimpannya" },
++    body: [{
++      en: "Account details are kept while your account is open. Orders and invoices are kept for as long as Malaysian tax law requires (generally seven years), then deleted.",
++      ms: "Butiran akaun disimpan selagi akaun anda dibuka. Pesanan dan invois disimpan selama yang dikehendaki undang-undang cukai Malaysia (lazimnya tujuh tahun), kemudian dipadam.",
++    }],
++  },
++  {
++    id: "your-rights",
++    title: { en: "Your rights", ms: "Hak anda" },
++    list: [
++      { en: "Ask for a copy of the personal data we hold about you.", ms: "Meminta salinan data peribadi yang kami simpan tentang anda." },
++      { en: "Correct anything that is inaccurate or out of date.", ms: "Membetulkan apa-apa yang tidak tepat atau lapuk." },
++      { en: "Close your account and have your data deleted, except records the law requires us to keep.", ms: "Menutup akaun anda dan memadam data anda, kecuali rekod yang wajib kami simpan menurut undang-undang." },
++      { en: "Withdraw consent for any optional use of your data.", ms: "Menarik balik persetujuan bagi sebarang penggunaan pilihan data anda." },
++    ],
++    body: [{ en: `Email ${CONTACT_EMAIL}. We will reply within 21 days, as the PDPA requires.`, ms: `E-mel ${CONTACT_EMAIL}. Kami akan membalas dalam tempoh 21 hari, seperti yang dikehendaki PDPA.` }],
++  },
++  {
++    id: "security",
++    title: { en: "How we protect it", ms: "Cara kami melindunginya" },
++    body: [{
++      en: "Your data is stored in a secure, access-controlled database and sent over encrypted connections. Admin access is limited to named team members and checked on every request. Sign-up and checkout use a simple click confirmation that sends nothing to any AI service.",
++      ms: "Data anda disimpan dalam pangkalan data yang selamat dengan kawalan akses dan dihantar melalui sambungan yang disulitkan. Akses pentadbir terhad kepada ahli pasukan yang dinamakan dan disemak pada setiap permintaan. Pendaftaran dan pembayaran menggunakan pengesahan klik ringkas yang tidak menghantar apa-apa kepada perkhidmatan AI.",
++    }],
++  },
++  {
++    id: "changes",
++    title: { en: "Changes to this policy", ms: "Perubahan pada dasar ini" },
++    body: [{ en: "If we change this policy, we will update the date at the top of this page.", ms: "Jika kami mengubah dasar ini, kami akan mengemas kini tarikh di bahagian atas halaman ini." }],
++  },
++];
++
+ function PrivacyPage() {
+   const { itemCount, userEmail, signOut } = useCart();
+-  const { t, lang } = useLang();
++  const { t } = useLang();
++  const b = (text: Bi) => t(text.en, text.ms);
++  const promises = [
++    { icon: ShieldCheck, text: { en: "We never sell your data", ms: "Kami tidak menjual data anda" } },
++    { icon: CreditCard, text: { en: "Card details stay with Stripe", ms: "Butiran kad kekal dengan Stripe" } },
++    { icon: Trash2, text: { en: "Ask to delete your data any time", ms: "Minta data dipadam bila-bila masa" } },
++  ];
++
+   return (
+     <main className="min-h-screen bg-brand-cream text-brand-forest">
+       <SiteHeader tone="dark" itemCount={itemCount} userEmail={userEmail} onSignOut={signOut} />
+-      <div className="mx-auto max-w-5xl px-5 py-8 sm:px-8 lg:py-12">
+-        <section className="py-12 lg:py-20">
++      <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:py-12">
++        <section className="py-10 lg:py-16">
+           <p className="type-label text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">{t("Privacy policy", "Dasar privasi")}</p>
+-          <h1 className="type-heading mt-4 font-display text-3xl font-light leading-tight sm:text-4xl">
+-            MAQAMY Living Concepts
+-          </h1>
+-          <p className="type-body mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">
+-            {t("MAQAMY Living Concepts respects the privacy of every customer. This policy explains how customer information is collected, used, and protected when creating an account, adding products to cart, or requesting a purchase consultation.", "MAQAMY Living Concepts menghormati privasi setiap pelanggan. Dasar ini menerangkan cara maklumat pelanggan dikumpul, digunakan dan dilindungi semasa mencipta akaun, menambah produk ke troli, atau meminta perundingan pembelian.")}
+-          </p>
++          <h1 className="type-heading mt-4 font-display text-3xl font-light leading-tight sm:text-5xl">{t("Your privacy, held with care.", "Privasi anda, dijaga dengan teliti.")}</h1>
++          <p className="type-body mt-5 max-w-3xl text-lg leading-8 text-muted-foreground">{t("This policy explains, in plain words, what personal data MAQAMY collects when you create an account, place an order or pay online, why we need it, and the choices you have.", "Dasar ini menerangkan dengan mudah data peribadi yang dikumpul MAQAMY apabila anda mencipta akaun, membuat pesanan atau membayar dalam talian, sebab kami memerlukannya, dan pilihan yang anda ada.")}</p>
++          <p className="mt-4 text-xs uppercase tracking-[0.15em] text-brand-forest/60">{t("Last updated", "Kemas kini terakhir")} · {b(LAST_UPDATED)}</p>
++          <ul className="mt-8 grid gap-3 sm:grid-cols-3">
++            {promises.map(({ icon: Icon, text }) => (
++              <li key={text.en} className="flex items-center gap-3 border border-brand-gold/30 bg-card px-4 py-3 text-sm"><Icon className="size-5 shrink-0 text-brand-gold" />{b(text)}</li>
++            ))}
++          </ul>
+         </section>
+ 
+-        <section className="grid gap-5 md:grid-cols-2">
+-          {(lang === "ms" ? [
+-            ["Maklumat yang kami kumpul", "Nama, nombor telefon, alamat e-mel, alamat penghantaran, butiran log masuk akaun, pilihan troli, koleksi pilihan, pilihan pakej, dan mesej yang dikongsi untuk perundingan atau pengendalian pesanan."],
+-            ["Cara kami menggunakannya", "Maklumat pelanggan digunakan untuk mengurus akaun, menyimpan item troli, menyediakan perbincangan pembelian, menyokong perancangan penghantaran, menjawab pertanyaan, dan menambah baik pengalaman pelanggan MAQAMY."],
+-            ["Cara ia dilindungi", "Profil pelanggan dan rekod troli disimpan dalam pangkalan data berasaskan akaun yang selamat. Setiap akaun pelanggan hanya boleh mengakses profil dan maklumat troli miliknya sahaja."],
+-            ["Perkongsian", "MAQAMY tidak menjual maklumat pelanggan. Butiran hanya boleh dikongsi apabila perlu untuk memenuhi permintaan pelanggan, mengatur penghantaran, menyediakan sokongan pemasangan, atau mematuhi kewajipan undang-undang."],
+-            ["Kawalan pelanggan", "Pelanggan boleh meminta pembetulan atau pemadaman maklumat akaun dan penghantaran, tertakluk kepada maklumat yang perlu disimpan oleh MAQAMY atas sebab perniagaan atau undang-undang yang sah."],
+-            ["Hak cipta", "MAQAMY Living Concepts serta persembahan, bahasa produk, identiti koleksi dan bahan jenama MAQAMY adalah hak cipta © 2026."],
+-            ["Pengesahan pembeli", "Pendaftaran e-mel dan pembayaran menggunakan pengesahan klik ringkas. Semakan ini tidak menghantar corak interaksi atau butiran peribadi kepada model AI."],
+-          ] : [
+-            ["Information we collect", "Name, phone number, email address, delivery address, account login details, cart selections, preferred collection, package selection, and messages shared for consultation or order handling."],
+-            ["How we use it", "Customer information is used to manage accounts, save cart items, prepare purchase conversations, support delivery planning, answer enquiries, and improve the MAQAMY customer experience."],
+-            ["How it is protected", "Customer profiles and cart records are stored in a secure account-based database. Each customer account can access only its own saved profile and cart information."],
+-            ["Sharing", "MAQAMY does not sell customer information. Details may be shared only when needed to fulfil a customer request, arrange delivery, provide installation support, or comply with legal obligations."],
+-            ["Customer control", "Customers may request correction or removal of account and delivery information, subject to any information MAQAMY must retain for legitimate business or legal reasons."],
+-            ["Copyright", "MAQAMY Living Concepts and the MAQAMY presentation, product language, collection identity, and brand materials are copyrighted © 2026."],
+-            ["Shopper verification", "Email registration and checkout use a simple click confirmation. This check does not send interaction patterns or personal details to an AI model."],
+-          ]).map(([title, body]) => (
+-            <article key={title} className="border border-brand-gold/25 bg-card p-5 shadow-gold">
+-              <h2 className="type-heading font-display text-3xl font-light">{title}</h2>
+-              <p className="type-body mt-3 text-sm leading-7 text-muted-foreground">{body}</p>
+-            </article>
+-          ))}
+-        </section>
++        <div className="grid gap-10 border-t border-brand-gold/25 pt-10 lg:grid-cols-[14rem_1fr] lg:gap-16">
++          <nav aria-label={t("On this page", "Dalam halaman ini")} className="lg:sticky lg:top-8 lg:self-start">
++            <p className="type-label text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-gold">{t("On this page", "Dalam halaman ini")}</p>
++            <ol className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-sm lg:grid-cols-1">
++              {sections.map((s, i) => <li key={s.id}><a href={`#${s.id}`} className="text-brand-forest/75 hover:text-brand-gold">{i + 1}. {b(s.title)}</a></li>)}
++              <li><a href="#contact" className="text-brand-forest/75 hover:text-brand-gold">{sections.length + 1}. {t("Contact us", "Hubungi kami")}</a></li>
++            </ol>
++          </nav>
++
++          <div className="space-y-12">
++            {sections.map((s, i) => (
++              <section key={s.id} id={s.id} className="scroll-mt-8">
++                <h2 className="type-heading font-display text-2xl font-light sm:text-3xl"><span className="mr-3 text-brand-gold">{i + 1}</span>{b(s.title)}</h2>
++                {s.table ? (
++                  <div className="mt-5 overflow-hidden border border-brand-gold/25">
++                    <table className="w-full text-left text-sm">
++                      <thead className="bg-brand-forest text-brand-cream"><tr>{s.table.head.map((h) => <th key={h.en} className="px-4 py-3 font-normal uppercase tracking-[0.12em] text-xs">{b(h)}</th>)}</tr></thead>
++                      <tbody>{s.table.rows.map(([k, v]) => <tr key={k.en} className="border-t border-brand-gold/20 bg-card align-top"><td className="w-1/3 px-4 py-3 font-semibold">{b(k)}</td><td className="px-4 py-3 leading-6 text-muted-foreground">{b(v)}</td></tr>)}</tbody>
++                    </table>
++                  </div>
++                ) : null}
++                {s.list ? <ul className="type-body mt-5 space-y-2 text-base leading-7 text-muted-foreground">{s.list.map((item) => <li key={item.en} className="flex gap-3"><span className="mt-3 h-px w-3 shrink-0 bg-brand-gold" aria-hidden="true" />{b(item)}</li>)}</ul> : null}
++                {s.body?.map((p) => <p key={p.en} className="type-body mt-5 text-base leading-7 text-muted-foreground">{b(p)}</p>)}
++              </section>
++            ))}
++
++            <section id="contact" className="scroll-mt-8 bg-brand-forest p-6 text-brand-cream sm:p-8">
++              <h2 className="type-heading font-display text-2xl font-light sm:text-3xl">{t("Questions or requests?", "Soalan atau permintaan?")}</h2>
++              <p className="type-body mt-3 text-base leading-7 text-brand-cream/80">{t("Write to us about your data at any time. Please include the email address on your account.", "Hubungi kami tentang data anda bila-bila masa. Sila sertakan alamat e-mel akaun anda.")}</p>
++              <p className="mt-5 font-display text-xl text-brand-gold-soft">{CONTACT_EMAIL}</p>
++            </section>
++          </div>
++        </div>
+       </div>
+       <SiteFooter />
+     </main>
