@@ -22,8 +22,9 @@ export const Route = createFileRoute("/privacy")({
 });
 
 const CONTACT_EMAIL = "maqamylivingconcepts@gmail.com";
-/** Registered name with SSM registration number (new and old formats). */
-const COMPANY_NAME = "MAQAMY Living Concepts, 202603244326 (003889427-H),";
+/** Registered name and SSM registration number (new and old formats). */
+const COMPANY_NAME = "MAQAMY Living Concepts";
+const COMPANY_REG = "202603244326 (003889427-H)";
 const LAST_UPDATED = { en: "22 November 2026", ms: "22 November 2026" };
 
 type Bi = { en: string; ms: string };
@@ -209,9 +210,16 @@ function PrivacyPage() {
         <div className="mx-auto max-w-3xl border border-brand-gold/30 bg-card px-6 py-12 text-center shadow-[0_24px_60px_-44px_rgb(0_0_0/0.4)] sm:px-12">
           <span className="mx-auto flex size-16 items-center justify-center rounded-full bg-brand-forest text-brand-gold-soft"><Mail className="size-7" /></span>
           <h2 className="type-heading mt-6 font-display text-3xl font-light sm:text-4xl">{t("Questions? We're here.", "Ada soalan? Kami di sini.")}</h2>
-          <p className="type-body mx-auto mt-4 max-w-md text-base leading-7 text-brand-forest/70">{t("Write to us about your data at any time. Please include the email address on your account.", "Hubungi kami tentang data anda bila-bila masa. Sila sertakan alamat e-mel akaun anda.")}</p>
-          <a href={`mailto:${CONTACT_EMAIL}?subject=Privacy%20request`} className="mt-6 inline-block break-all border-b border-brand-gold pb-1 font-display text-xl text-brand-forest hover:text-brand-gold">{CONTACT_EMAIL}</a>
-          <p className="mx-auto mt-10 max-w-lg text-xs leading-5 text-brand-forest/50">{t(`${COMPANY_NAME} is responsible for your personal data. If this policy changes, we'll update the date at the top of this page.`, `${COMPANY_NAME} bertanggungjawab ke atas data peribadi anda. Jika dasar ini berubah, kami akan mengemas kini tarikh di bahagian atas halaman ini.`)}</p>
+          <p className="type-body mx-auto mt-4 max-w-xl text-base leading-7 text-brand-forest/70">
+            <span className="block">{t("Write to us about your data at any time.", "Hubungi kami tentang data anda bila-bila masa.")}</span>
+            <span className="block">{t("Please include the email address on your account.", "Sila sertakan alamat e-mel akaun anda.")}</span>
+          </p>
+          <a href={`mailto:${CONTACT_EMAIL}?subject=Privacy%20request`} className="mt-6 inline-block break-all border-b border-brand-gold pb-1 font-display text-lg text-brand-forest sm:text-xl hover:text-brand-gold">{CONTACT_EMAIL}</a>
+          <p className="mx-auto mt-10 max-w-xl text-xs leading-5 text-brand-forest/50">
+            <span className="block">{COMPANY_NAME}, <span className="whitespace-nowrap">{COMPANY_REG},</span></span>
+            <span className="block">{t("is responsible for your personal data.", "bertanggungjawab ke atas data peribadi anda.")}</span>
+            <span className="block">{t("If this policy changes, we'll update the date at the top of this page.", "Jika dasar ini berubah, kami akan mengemas kini tarikh di bahagian atas halaman ini.")}</span>
+          </p>
         </div>
       </section>
 
