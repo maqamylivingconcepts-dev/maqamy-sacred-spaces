@@ -32,8 +32,8 @@ export const brandStoryV2: BrandStoryParagraph[] = [
     ms: "MAQAMY ialah rumah reka bentuk yang mencipta ruang untuk menghadirkan hati. Kami mereka perabot dan ruang dalaman untuk solat dan renungan — bukan untuk mengagumkan, tetapi untuk meredakan kebisingan dan memberi ruang kepada perkara yang benar-benar penting.",
   },
   {
-    en: "Our name comes from maqām — a station, a place where one stands. Every piece begins with that idea: that where you pray, pause and remember deserves the same care as the rest of your home, if not more.",
-    ms: "Nama kami berasal daripada maqām — satu kedudukan, tempat seseorang berdiri. Setiap ciptaan bermula dengan idea itu: bahawa tempat anda solat, berhenti seketika dan mengingati-Nya wajar diberi perhatian yang sama seperti bahagian lain rumah anda, malah lebih lagi.",
+    en: "Our name comes from maqām — a place to return. Every piece begins with that idea: that the place where you pray, pause and remember deserves the same care as the rest of your home, if not more.",
+    ms: "Nama kami berasal daripada maqām — tempat untuk kembali. Setiap ciptaan bermula dengan idea itu: bahawa tempat anda solat, berhenti seketika dan mengingati-Nya wajar diberi perhatian yang sama seperti bahagian lain rumah anda, malah lebih lagi.",
   },
   {
     en: "We work through form, material, proportion and craft. Guided by the timeless principles of Islamic art and architecture, we reduce each idea to what is essential, then finish it with the detail it deserves — so every object feels both quiet and complete.",
