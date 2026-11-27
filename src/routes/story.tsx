@@ -55,7 +55,7 @@ function StoryPage() {
                 gold={GOLD_PHRASES}
                 specials={["maqām"]}
                 renderSpecial={(word) => <MeaningWord word={word} arabic="مقام" meaning={t("a place to return", "tempat untuk kembali")} label={t("Meaning of maqām", "Maksud maqām")} />}
-                className="type-storyBody mt-5 font-display text-2xl font-light leading-[1.55] sm:text-[2.1rem] sm:leading-[1.5]"
+                className="type-storyBody mt-5 text-lg leading-9 sm:text-2xl sm:leading-10"
               />
             </div>
           ))}
@@ -72,7 +72,7 @@ function StoryPage() {
           <RevealText
             text={t(brandStory[3]!.en, brandStory[3]!.ms)}
             gold={GOLD_PHRASES}
-            className="type-storyBody mx-auto mt-14 text-xl font-light leading-[1.7] sm:text-2xl"
+            className="type-storyBody mx-auto mt-14 text-lg leading-9 sm:text-2xl sm:leading-10"
           />
         </div>
       </section>
@@ -84,7 +84,7 @@ function StoryPage() {
           <RevealText
             text={t(brandStory[4]!.en, brandStory[4]!.ms)}
             gold={GOLD_PHRASES}
-            className="type-storyBody mt-5 font-display text-2xl font-light leading-[1.55] sm:text-[2.1rem] sm:leading-[1.5]"
+            className="type-storyBody mt-5 text-lg leading-9 sm:text-2xl sm:leading-10"
           />
         </div>
       </section>
