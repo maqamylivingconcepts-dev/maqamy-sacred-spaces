@@ -18,7 +18,7 @@ dummy values):
 
 - `WHATSAPP_NUMBER` — set to `60186693631` (018-669 3631)
 - `FACEBOOK_URL` — set to the Maqamy Living Concepts page
-- `INSTAGRAM_URL` — e.g. `https://www.instagram.com/maqamy`
+- `INSTAGRAM_URL` — set to `instagram.com/maqamylivingconcepts`
 - `THREADS_URL` — e.g. `https://www.threads.net/@maqamy`
 
 The Threads icon is an @ sign stand-in; swap for the official Threads mark if preferred.
