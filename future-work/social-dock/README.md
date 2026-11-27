@@ -17,7 +17,7 @@ Fill in at the top of `src/components/maqamy/social-dock.tsx` (the patch has
 dummy values):
 
 - `WHATSAPP_NUMBER` — set to `60186693631` (018-669 3631)
-- `FACEBOOK_URL` — e.g. `https://www.facebook.com/maqamy`
+- `FACEBOOK_URL` — set to the Maqamy Living Concepts page
 - `INSTAGRAM_URL` — e.g. `https://www.instagram.com/maqamy`
 - `THREADS_URL` — e.g. `https://www.threads.net/@maqamy`
 

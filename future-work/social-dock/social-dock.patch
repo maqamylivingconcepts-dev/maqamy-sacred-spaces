@@ -11,7 +11,7 @@ index 0000000..d1465f7
 +
 +/* Owner to confirm before going live. */
 +const WHATSAPP_NUMBER = "60186693631";
-+const FACEBOOK_URL = "https://www.facebook.com/";
++const FACEBOOK_URL = "https://www.facebook.com/people/Maqamy-Living-Concepts/61596819247001/";
 +const INSTAGRAM_URL = "https://www.instagram.com/";
 +const THREADS_URL = "https://www.threads.net/";
 +
