@@ -16,7 +16,7 @@ Previews: `preview-mobile.png` (closed / open), `preview-desktop-open.png`.
 Fill in at the top of `src/components/maqamy/social-dock.tsx` (the patch has
 dummy values):
 
-- `WHATSAPP_NUMBER` — digits with country code, e.g. `60123456789`
+- `WHATSAPP_NUMBER` — set to `60186693631` (018-669 3631)
 - `FACEBOOK_URL` — e.g. `https://www.facebook.com/maqamy`
 - `INSTAGRAM_URL` — e.g. `https://www.instagram.com/maqamy`
 - `THREADS_URL` — e.g. `https://www.threads.net/@maqamy`
