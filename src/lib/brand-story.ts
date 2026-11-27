@@ -44,8 +44,8 @@ export const brandStoryV2: BrandStoryParagraph[] = [
     ms: "Di teras kami terletak Ḥuḍūr al-Qalb — kehadiran hati. Pengabdian tidak boleh direka, namun ia boleh diundang. Ruang solat, perabot dan objek kami dicipta untuk tujuan itu: untuk memperlahankan langkah, menenangkan ruang, dan menjadikan setiap saat solat lebih bermakna.",
   },
   {
-    en: "Rooted in heritage and made for modern homes everywhere, MAQAMY is shaping its own language of contemporary Islamic living — one space, one moment, one heart at a time.",
-    ms: "Berakar pada warisan dan dicipta untuk rumah moden di mana-mana, MAQAMY sedang membentuk bahasanya sendiri tentang kehidupan Islam kontemporari — satu ruang, satu saat, satu hati pada satu masa.",
+    en: "From Malaysia, for the world. Rooted in heritage and made for modern homes everywhere, MAQAMY is shaping its own language of contemporary Islamic living — one space, one moment, one heart at a time.",
+    ms: "Dari Malaysia, untuk dunia. Berakar pada warisan dan dicipta untuk rumah moden di mana-mana, MAQAMY sedang membentuk bahasanya sendiri tentang kehidupan Islam kontemporari — satu ruang, satu saat, satu hati pada satu masa.",
   },
 ];
 
