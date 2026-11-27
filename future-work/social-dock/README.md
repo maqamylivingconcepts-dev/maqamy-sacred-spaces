@@ -3,8 +3,9 @@
 Not live yet. Replaces the WhatsApp-only idea in `../whatsapp-button/`.
 
 A round MAQAMY-style button (forest green, gold phone icon) at the bottom-right
-of every customer page (hidden on admin). Tapping it fans out four labelled
-links — **WhatsApp, Facebook, Instagram, Threads** — and turns into an ✕.
+of every customer page (hidden on admin). Tapping it fans out four icon-only
+links — **WhatsApp, Facebook, Instagram, Threads** — and turns into an ✕
+(names are kept for screen readers and as hover tooltips).
 Tapping outside or pressing Esc closes it. WhatsApp opens with a ready message
 in the visitor's language.
 

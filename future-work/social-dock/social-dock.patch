@@ -1,9 +1,9 @@
 diff --git a/src/components/maqamy/social-dock.tsx b/src/components/maqamy/social-dock.tsx
 new file mode 100644
-index 0000000..95873af
+index 0000000..d1465f7
 --- /dev/null
 +++ b/src/components/maqamy/social-dock.tsx
-@@ -0,0 +1,87 @@
+@@ -0,0 +1,88 @@
 +import { AtSign, Facebook, Instagram, Smartphone, X, type LucideIcon } from "lucide-react";
 +import { useEffect, useRef, useState, type ComponentType } from "react";
 +
@@ -50,8 +50,8 @@ index 0000000..95873af
 +  ];
 +
 +  return (
-+    <div ref={root} className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3 sm:bottom-8 sm:right-8">
-+      <ul id="maqamy-social-links" aria-hidden={!open} className="flex flex-col items-end gap-3">
++    <div ref={root} className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-3 sm:bottom-8 sm:right-8">
++      <ul id="maqamy-social-links" aria-hidden={!open} className="flex flex-col items-center gap-3">
 +        {channels.map((c, i) => {
 +          const Icon = c.icon;
 +          const delay = `${(channels.length - 1 - i) * 45}ms`;
@@ -67,9 +67,10 @@ index 0000000..95873af
 +                rel="noopener noreferrer"
 +                tabIndex={open ? 0 : -1}
 +                onClick={() => setOpen(false)}
-+                className="group flex items-center gap-3"
++                aria-label={c.label}
++                title={c.label}
++                className="group flex"
 +              >
-+                <span className="rounded-full bg-brand-cream px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-brand-forest shadow-[0_6px_18px_-8px_rgb(0_0_0/0.4)]">{c.label}</span>
 +                <span className="flex size-12 items-center justify-center rounded-full bg-brand-forest text-brand-gold-soft ring-1 ring-brand-gold/50 shadow-[0_8px_24px_-8px_rgb(0_0_0/0.45)] group-hover:scale-105">
 +                  <Icon className="size-5" />
 +                </span>
