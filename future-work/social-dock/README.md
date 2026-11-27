@@ -1,6 +1,7 @@
-# Social contact button (proposal)
+# Social contact button
 
-Not live yet. Replaces the WhatsApp-only idea in `../whatsapp-button/`.
+**Applied to the live site on 27 November 2026** with the real WhatsApp,
+Facebook, Instagram and Threads links. Replaces the WhatsApp-only idea in `../whatsapp-button/`.
 
 A round MAQAMY-style button (forest green, gold phone icon) at the bottom-right
 of every customer page (hidden on admin). Tapping it fans out four icon-only

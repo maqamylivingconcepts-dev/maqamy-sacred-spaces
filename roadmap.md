@@ -1,5 +1,9 @@
 # MAQAMY rebuild
 
+## Contact button
+- [x] Floating MAQAMY contact button that opens into WhatsApp, Facebook, Instagram and Threads (customer pages only)
+- [x] Verify links, open/close and Esc on desktop and mobile
+
 ## Privacy page refresh
 - [x] Rewrite /privacy to match how the site works (Stripe, admin access, PDPA rights, retention, contact)
 - [x] Brand-styled layout: promises, icon cards, trusted-circle tiles, rights tiles, contact card
