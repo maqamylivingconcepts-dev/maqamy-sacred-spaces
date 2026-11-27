@@ -15,4 +15,5 @@ git apply future-work/<proposal>/<proposal>.patch
 | [`story-redesign/`](story-redesign/) | Rebuilds `/story` as five bilingual editorial chapters with an arched opening image, a Ḥuḍūr al-Qalb feature band and a closing invitation; adds two owner-replaceable story images. |
 | [`privacy-redesign/`](privacy-redesign/) | **Applied 22 Nov 2026.** Rewrites `/privacy` to match how the site works today (Stripe payments, admin access, PDPA rights, retention, contact) with a contents list, data table and promise badges. |
 | [`admin-product-details-toggle/`](admin-product-details-toggle/) | **Planned.** An admin on/off switch to show or hide the product Details and The collection lists (currently hidden in code). |
-| [`whatsapp-button/`](whatsapp-button/) | **Waiting for number & colour.** Floating WhatsApp chat button with a bilingual ready message. |
+| [`whatsapp-button/`](whatsapp-button/) | **Superseded by `social-dock/`.** Floating WhatsApp chat button with a bilingual ready message. |
+| [`social-dock/`](social-dock/) | **Waiting for links.** Floating contact button that opens into WhatsApp, Facebook, Instagram and Threads. |
