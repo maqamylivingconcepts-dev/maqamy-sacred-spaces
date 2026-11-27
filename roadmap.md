@@ -1,5 +1,8 @@
 # MAQAMY rebuild
 
+## Brand story v2
+- [x] Replace the Malaysia-led story (v1) with a brand-led v2 in English and Malay; keep v1 in code and docs/brand-story/
+
 ## Mobile polish
 - [x] Enlarge phone tap areas for header, menu, footer links and EN/BM to about 44px without changing the layout
 - [x] Serve a 5.6 KB optimised logo instead of the 77 KB original

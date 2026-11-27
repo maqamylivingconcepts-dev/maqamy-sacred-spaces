@@ -1,4 +1,8 @@
-export const brandStory = [
+/** Bilingual brand-story paragraphs. Older versions are kept so the story can be switched back. */
+export type BrandStoryParagraph = { en: string; ms: string };
+
+/** v1 — original story (Malaysian design house), retired 27 Nov 2026. */
+export const brandStoryV1: BrandStoryParagraph[] = [
   {
     en: "MAQAMY is a Malaysian design house dedicated to the art of mindful living, creating contemporary furnishings and considered spaces that bring together design excellence, cultural identity, and spiritual meaning. Rooted in the belief that the home is a sanctuary for the heart, MAQAMY explores how thoughtful design can restore a sense of peace, presence, and connection in everyday life.",
     ms: "MAQAMY ialah sebuah rumah reka bentuk Malaysia yang mengkhusus dalam seni kehidupan penuh kesedaran, menghasilkan perabot kontemporari dan ruang yang dirancang teliti untuk menyatukan kecemerlangan reka bentuk, identiti budaya dan makna kerohanian. Berteraskan kepercayaan bahawa rumah ialah tempat perlindungan bagi hati, MAQAMY meneroka bagaimana reka bentuk yang teliti dapat mengembalikan ketenangan, kehadiran hati dan hubungan dalam kehidupan seharian.",
@@ -20,3 +24,30 @@ export const brandStory = [
     ms: "Sebagai jenama reka bentuk Malaysia yang berpandangan antarabangsa, MAQAMY terus membangunkan ekspresinya sendiri tentang kehidupan Islam kontemporari — yang menghormati asal usulnya sambil menerima kemungkinan baharu dalam reka bentuk, pertukangan dan pengalaman ruang.",
   },
 ];
+
+/** v2 — brand-led story, live from 27 Nov 2026. */
+export const brandStoryV2: BrandStoryParagraph[] = [
+  {
+    en: "MAQAMY is a design house creating spaces that bring the heart into presence. We design furnishings and considered interiors for prayer and reflection — made not to impress, but to quiet the noise and make room for what matters.",
+    ms: "MAQAMY ialah rumah reka bentuk yang mencipta ruang untuk menghadirkan hati. Kami mereka perabot dan ruang dalaman untuk solat dan renungan — bukan untuk mengagumkan, tetapi untuk meredakan kebisingan dan memberi ruang kepada perkara yang benar-benar penting.",
+  },
+  {
+    en: "Our name comes from maqām — a station, a place where one stands. Every piece begins with that idea: that where you pray, pause and remember deserves the same care as the rest of your home, if not more.",
+    ms: "Nama kami berasal daripada maqām — satu kedudukan, tempat seseorang berdiri. Setiap ciptaan bermula dengan idea itu: bahawa tempat anda solat, berhenti seketika dan mengingati-Nya wajar diberi perhatian yang sama seperti bahagian lain rumah anda, malah lebih lagi.",
+  },
+  {
+    en: "We work through form, material, proportion and craft. Guided by the timeless principles of Islamic art and architecture, we reduce each idea to what is essential, then finish it with the detail it deserves — so every object feels both quiet and complete.",
+    ms: "Kami bekerja melalui bentuk, bahan, perkadaran dan pertukangan. Berpandukan prinsip abadi seni dan seni bina Islam, kami memudahkan setiap idea kepada intipatinya, lalu menyempurnakannya dengan perincian yang sewajarnya — supaya setiap objek terasa tenang dan lengkap.",
+  },
+  {
+    en: "At our heart is Ḥuḍūr al-Qalb — the presence of the heart. Devotion cannot be designed, but it can be invited. Our prayer spaces, furnishings and objects are made to do exactly that: to slow you down, to settle the room, and to make each moment of prayer a little more intentional.",
+    ms: "Di teras kami terletak Ḥuḍūr al-Qalb — kehadiran hati. Pengabdian tidak boleh direka, namun ia boleh diundang. Ruang solat, perabot dan objek kami dicipta untuk tujuan itu: untuk memperlahankan langkah, menenangkan ruang, dan menjadikan setiap saat solat lebih bermakna.",
+  },
+  {
+    en: "Rooted in heritage and made for modern homes everywhere, MAQAMY is shaping its own language of contemporary Islamic living — one space, one moment, one heart at a time.",
+    ms: "Berakar pada warisan dan dicipta untuk rumah moden di mana-mana, MAQAMY sedang membentuk bahasanya sendiri tentang kehidupan Islam kontemporari — satu ruang, satu saat, satu hati pada satu masa.",
+  },
+];
+
+/** The version shown on the story page. */
+export const brandStory = brandStoryV2;

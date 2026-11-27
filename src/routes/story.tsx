@@ -12,9 +12,9 @@ import { brandStory } from "@/lib/brand-story";
 export const Route = createFileRoute("/story")({
   head: () => ({ meta: [
     { title: "The MAQAMY Story — Designed for the Presence of the Heart" },
-    { name: "description", content: "Discover MAQAMY, a Malaysian design house bringing together design excellence, cultural identity and spiritual meaning through mindful living." },
+    { name: "description", content: "Discover MAQAMY, a design house creating prayer spaces and furnishings that bring the heart into presence." },
     { property: "og:title", content: "The MAQAMY Story — Designed for the Presence of the Heart" },
-    { property: "og:description", content: "Contemporary Islamic living, rooted in Malaysia and inspired by Ḥuḍūr al-Qalb — the presence of the heart." },
+    { property: "og:description", content: "Contemporary Islamic living, inspired by Ḥuḍūr al-Qalb — the presence of the heart." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),
@@ -39,7 +39,7 @@ function StoryPage() {
       <div className="bg-brand-forest"><SiteHeader itemCount={itemCount} userEmail={userEmail} onSignOut={signOut} /></div>
       <section className="grid min-h-[78svh] lg:grid-cols-2">
         <div className="flex flex-col justify-center px-5 py-20 sm:px-8 lg:pl-[max(3rem,calc((100vw-80rem)/2+3rem))] lg:pr-12">
-          <p className="type-label text-xs font-semibold uppercase text-brand-gold">{t("Malaysian design house", "Rumah reka bentuk Malaysia")}</p>
+          <p className="type-label text-xs font-semibold uppercase text-brand-gold">{t("A design house for the heart", "Rumah reka bentuk untuk hati")}</p>
           <h1 className="type-heading mt-5 max-w-xl font-display text-3xl font-light leading-[1.1] sm:text-4xl">{t("The MAQAMY Story", "Kisah MAQAMY")}</h1>
           <p className="type-body mt-8 max-w-lg font-display text-2xl italic leading-8 text-muted-foreground">{t("Designed for the presence of the heart.", "Direka untuk kehadiran hati.")}</p>
         </div>
