@@ -1,5 +1,8 @@
 # MAQAMY rebuild
 
+## Interactive story
+- [x] Words light up as you read with gold key phrases, tap-to-reveal maqām meaning card, حضور القلب drawn in gold (reduced-motion safe, EN/BM)
+
 ## Brand story v2
 - [x] Replace the Malaysia-led story (v1) with a brand-led v2 in English and Malay; keep v1 in code and docs/brand-story/
 

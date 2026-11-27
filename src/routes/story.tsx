@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 
 import { SiteFooter, SiteHeader } from "@/components/maqamy/site-chrome";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,13 @@ import { SiteImg } from "@/components/maqamy/site-img";
 import { useCart } from "@/lib/use-cart";
 import { useLang } from "@/lib/i18n";
 import { brandStory } from "@/lib/brand-story";
+import { DrawnArabic, MeaningWord, RevealText } from "@/components/maqamy/story-interactive";
+
+const NUMERALS = ["I", "II", "III", "IV", "V"];
+const GOLD_PHRASES = [
+  "bring the heart into presence", "a place to return", "the presence of the heart", "From Malaysia, for the world.",
+  "menghadirkan hati", "tempat untuk kembali", "kehadiran hati", "Dari Malaysia, untuk dunia.",
+];
 
 export const Route = createFileRoute("/story")({
   head: () => ({ meta: [
@@ -22,17 +28,8 @@ export const Route = createFileRoute("/story")({
 });
 
 function StoryPage() {
-  const [active, setActive] = useState(0);
-  const refs = useRef<Array<HTMLParagraphElement | null>>([]);
   const { itemCount, userEmail, signOut } = useCart();
   const { t } = useLang();
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) if (entry.isIntersecting) setActive(Number(entry.target.getAttribute("data-index") ?? 0));
-    }, { rootMargin: "-20% 0px -20% 0px", threshold: 0.25 });
-    refs.current.forEach((node) => { if (node) observer.observe(node); });
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <main className="bg-brand-cream text-brand-forest">
@@ -47,16 +44,48 @@ function StoryPage() {
           <SiteImg slot="story" alt="A complete MAQAMY prayer space" className="h-full w-full object-contain" />
         </div>
       </section>
+      {/* Chapters I–III: words light up as you read */}
+      <section className="overflow-x-clip px-5 py-24 sm:px-8 lg:py-36">
+        <div className="mx-auto max-w-3xl space-y-24 lg:space-y-32">
+          {[0, 1, 2].map((i) => (
+            <div key={i}>
+              <p className="font-display text-2xl italic text-brand-gold">{NUMERALS[i]}</p>
+              <RevealText
+                text={t(brandStory[i]!.en, brandStory[i]!.ms)}
+                gold={GOLD_PHRASES}
+                specials={["maqām"]}
+                renderSpecial={(word) => <MeaningWord word={word} arabic="مقام" meaning={t("a place to return", "tempat untuk kembali")} label={t("Meaning of maqām", "Maksud maqām")} />}
+                className="type-storyBody mt-5 font-display text-2xl font-light leading-[1.55] sm:text-[2.1rem] sm:leading-[1.5]"
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Chapter IV: Ḥuḍūr al-Qalb drawn in calligraphy */}
+      <section className="bg-brand-forest px-5 py-24 text-brand-cream sm:px-8 lg:py-36">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="type-label text-[11px] font-semibold uppercase tracking-[0.3em] text-brand-gold-soft">{NUMERALS[3]} · {t("Our philosophy", "Falsafah kami")}</p>
+          <DrawnArabic text="حضور القلب" className="mt-8 text-brand-gold-soft" />
+          <h2 className="type-heading mt-2 font-display text-4xl font-light sm:text-5xl">Ḥuḍūr al-Qalb</h2>
+          <p className="mt-3 font-display text-lg italic text-brand-cream/70">{t("The presence of the heart.", "Kehadiran hati.")}</p>
+          <RevealText
+            text={t(brandStory[3]!.en, brandStory[3]!.ms)}
+            gold={GOLD_PHRASES}
+            className="type-storyBody mx-auto mt-14 text-xl font-light leading-[1.7] sm:text-2xl"
+          />
+        </div>
+      </section>
+
+      {/* Chapter V */}
       <section className="px-5 py-24 sm:px-8 lg:py-36">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.65fr_1.35fr]">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <p className="type-label text-xs font-semibold uppercase text-brand-gold">{t("Our philosophy", "Falsafah kami")}</p>
-            <h2 className="type-heading mt-4 font-display text-4xl font-light">Ḥuḍūr al-Qalb</h2>
-            <p className="type-body mt-4 text-base text-muted-foreground">{t("The presence of the heart.", "Kehadiran hati.")}</p>
-          </div>
-          <div className="space-y-16">
-            {brandStory.map((paragraph, index) => <p key={index} ref={(node) => { refs.current[index] = node; }} data-index={index} className={`type-storyBody px-5 py-6 text-lg leading-9 transition-colors duration-500 sm:px-8 sm:text-2xl sm:leading-10 ${active === index ? "bg-highlight text-highlight-foreground" : "text-muted-foreground"}`}>{t(paragraph.en, paragraph.ms)}</p>)}
-          </div>
+        <div className="mx-auto max-w-3xl">
+          <p className="font-display text-2xl italic text-brand-gold">{NUMERALS[4]}</p>
+          <RevealText
+            text={t(brandStory[4]!.en, brandStory[4]!.ms)}
+            gold={GOLD_PHRASES}
+            className="type-storyBody mt-5 font-display text-2xl font-light leading-[1.55] sm:text-[2.1rem] sm:leading-[1.5]"
+          />
         </div>
       </section>
       <section className="bg-brand-forest px-5 py-20 text-brand-cream sm:px-8 lg:py-28">

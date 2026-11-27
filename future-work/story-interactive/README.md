@@ -1,6 +1,6 @@
-# Interactive story layout (proposal)
+# Interactive story layout
 
-Not live yet. Reworks the middle of `/story` (keeps the opening and the
+**Applied to the live site on 27 November 2026.** The opening story image is unchanged. Reworks the middle of `/story` (keeps the opening and the
 closing "Explore Collections" band) around three interactions, using the v2
 story text in English and Malay:
 
