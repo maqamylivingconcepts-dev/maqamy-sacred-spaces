@@ -17,3 +17,4 @@ git apply future-work/<proposal>/<proposal>.patch
 | [`admin-product-details-toggle/`](admin-product-details-toggle/) | **Planned.** An admin on/off switch to show or hide the product Details and The collection lists (currently hidden in code). |
 | [`whatsapp-button/`](whatsapp-button/) | **Superseded by `social-dock/`.** Floating WhatsApp chat button with a bilingual ready message. |
 | [`social-dock/`](social-dock/) | **Applied 27 Nov 2026.** Floating contact button that opens into WhatsApp, Facebook, Instagram and Threads. |
+| [`story-interactive/`](story-interactive/) | **Proposal.** Story page layout with words that light up as you read, a tap-to-reveal *maqām* meaning card, and حضور القلب drawn in gold. |
