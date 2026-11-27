@@ -1,5 +1,9 @@
 # MAQAMY rebuild
 
+## Mobile polish
+- [x] Enlarge phone tap areas for header, menu, footer links and EN/BM to about 44px without changing the layout
+- [x] Serve a 5.6 KB optimised logo instead of the 77 KB original
+
 ## Contact button
 - [x] Floating MAQAMY contact button that opens into WhatsApp, Facebook, Instagram, Threads and YouTube (customer pages only)
 - [x] Verify links, open/close and Esc on desktop and mobile

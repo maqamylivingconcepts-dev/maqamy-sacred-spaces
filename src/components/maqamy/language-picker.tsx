@@ -23,9 +23,9 @@ export function LanguageToggle({ className = "" }: { className?: string }) {
   const { lang } = useLang();
   return (
     <div className={`flex items-center text-[10px] font-semibold uppercase tracking-[0.2em] ${className}`} role="group" aria-label="Language">
-      <button type="button" onClick={() => setLang("en")} className={`px-1.5 py-1 transition-opacity ${lang === "en" ? "opacity-100" : "opacity-50 hover:opacity-80"}`}>EN</button>
+      <button type="button" onClick={() => setLang("en")} className={`-mx-1 -my-2.5 px-2.5 py-3.5 transition-opacity ${lang === "en" ? "opacity-100" : "opacity-50 hover:opacity-80"}`}>EN</button>
       <span className="opacity-40">/</span>
-      <button type="button" onClick={() => setLang("ms")} className={`px-1.5 py-1 transition-opacity ${lang === "ms" ? "opacity-100" : "opacity-50 hover:opacity-80"}`}>BM</button>
+      <button type="button" onClick={() => setLang("ms")} className={`-mx-1 -my-2.5 px-2.5 py-3.5 transition-opacity ${lang === "ms" ? "opacity-100" : "opacity-50 hover:opacity-80"}`}>BM</button>
     </div>
   );
 }

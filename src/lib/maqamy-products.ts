@@ -1,7 +1,6 @@
 import authAsset from "@/assets/maqamy-auth.jpg.asset.json";
 import homeAsset from "@/assets/maqamy-home.jpg.asset.json";
 import jannaAsset from "@/assets/maqamy-janna.jpg.asset.json";
-import logoAsset from "@/assets/maqamy-logo.png.asset.json";
 import noorAsset from "@/assets/maqamy-noor.jpg.asset.json";
 import storyAsset from "@/assets/maqamy-story.jpg.asset.json";
 
@@ -32,7 +31,8 @@ export type ProductCollection = {
 // Asset proxy paths belong to the Lovable host, not the Vercel/custom domain.
 const assetUrl = (url: string) => new URL(url, "https://maqamy-sacred-spaces.lovable.app").href;
 export const brandAssets = {
-  logo: assetUrl(logoAsset.url),
+  // Optimised 640px copy of the supplied transparent logo (5.6 KB vs 77 KB), served from /public on every host.
+  logo: "/maqamy-logo.png",
   desert: assetUrl(homeAsset.url),
   prayerSpace: assetUrl(storyAsset.url),
   auth: assetUrl(authAsset.url),

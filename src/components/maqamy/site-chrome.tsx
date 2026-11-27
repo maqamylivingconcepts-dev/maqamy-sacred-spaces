@@ -44,7 +44,7 @@ export function SiteHeader({ itemCount = 0, userEmail, onSignOut, tone = "light"
             <Button asChild variant="ghost" size="sm" className={`hidden lg:inline-flex ${textClass}`}><Link to="/auth" search={{ redirect: "/collections" }}><UserRound /> {t("Account", "Akaun")}</Link></Button>
           )}
         </div>
-        <Link to="/" aria-label="MAQAMY introduction" onClick={onLogoClick} className="mx-auto block w-full max-w-40 sm:max-w-52 lg:w-64 lg:max-w-none">
+        <Link to="/" aria-label="MAQAMY introduction" onClick={onLogoClick} className="mx-auto -my-3 block w-full max-w-40 py-3 sm:max-w-52 lg:w-64 lg:max-w-none">
           <SiteImg slot="logo" alt="MAQAMY" className={`h-auto w-full ${light ? "brightness-0 invert" : ""}`} />
         </Link>
         <div className="flex justify-end">
@@ -72,7 +72,7 @@ export function SiteHeader({ itemCount = 0, userEmail, onSignOut, tone = "light"
       </div>
       {open ? (
         <nav className={`border-t ${borderClass} ${light ? "bg-brand-forest" : "bg-brand-cream"} px-5 py-6 lg:hidden`}>
-          <div className="flex flex-col gap-5 text-sm font-semibold">
+          <div className="flex flex-col text-sm font-semibold [&>a]:py-3">
             <Link to="/story" onClick={() => setOpen(false)}>{t("Our story", "Kisah kami")}</Link>
             <Link to="/collections" onClick={() => setOpen(false)}>{t("Collections", "Koleksi")}</Link>
             <Link to="/cart" onClick={() => setOpen(false)}>{t("Cart", "Troli")}</Link>
@@ -94,7 +94,7 @@ export function SiteFooter() {
           <SiteImg slot="logo" alt="MAQAMY Living Concepts" className="mx-auto w-48 brightness-0 invert sm:mx-0" />
           <p className="type-footer mt-5 text-xs uppercase text-brand-cream/60">MAQAMY Living Concepts © 2026</p>
         </div>
-        <div className="flex flex-wrap gap-6 text-sm text-brand-cream/70">
+        <div className="flex flex-wrap gap-6 text-sm text-brand-cream/70 [&>a]:-my-3 [&>a]:py-3">
           <Link to="/story">{t("Our story", "Kisah kami")}</Link><Link to="/collections">{t("Collections", "Koleksi")}</Link><Link to="/cart">{t("Cart", "Troli")}</Link><Link to="/orders">{t("My orders", "Pesanan saya")}</Link><Link to="/privacy">{t("Privacy", "Privasi")}</Link>
         </div>
       </div>
