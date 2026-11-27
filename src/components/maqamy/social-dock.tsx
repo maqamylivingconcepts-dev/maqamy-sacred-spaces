@@ -1,4 +1,4 @@
-import { AtSign, Facebook, Instagram, Smartphone, X, type LucideIcon } from "lucide-react";
+import { AtSign, Facebook, Instagram, Smartphone, X, Youtube, type LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState, type ComponentType } from "react";
 
 import { useLang } from "@/lib/i18n";
@@ -8,6 +8,7 @@ const WHATSAPP_NUMBER = "60186693631";
 const FACEBOOK_URL = "https://www.facebook.com/people/Maqamy-Living-Concepts/61596819247001/";
 const INSTAGRAM_URL = "https://www.instagram.com/maqamylivingconcepts/";
 const THREADS_URL = "https://www.threads.com/@maqamylivingconcepts";
+const YOUTUBE_URL = "https://www.youtube.com/@MaqamyLC";
 
 /** WhatsApp glyph (Simple Icons, CC0). */
 function WhatsAppGlyph({ className = "" }: { className?: string }) {
@@ -20,7 +21,7 @@ function WhatsAppGlyph({ className = "" }: { className?: string }) {
 
 type Channel = { key: string; label: string; href: string; icon: LucideIcon | ComponentType<{ className?: string }> };
 
-/** Floating contact button that opens into WhatsApp, Facebook, Instagram and Threads. */
+/** Floating contact button that opens into WhatsApp, Facebook, Instagram, Threads and YouTube. */
 export function SocialDock() {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -41,6 +42,7 @@ export function SocialDock() {
     { key: "facebook", label: "Facebook", href: FACEBOOK_URL, icon: Facebook },
     { key: "instagram", label: "Instagram", href: INSTAGRAM_URL, icon: Instagram },
     { key: "threads", label: "Threads", href: THREADS_URL, icon: AtSign },
+    { key: "youtube", label: "YouTube", href: YOUTUBE_URL, icon: Youtube },
   ];
 
   return (

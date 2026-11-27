@@ -1,7 +1,7 @@
 # MAQAMY rebuild
 
 ## Contact button
-- [x] Floating MAQAMY contact button that opens into WhatsApp, Facebook, Instagram and Threads (customer pages only)
+- [x] Floating MAQAMY contact button that opens into WhatsApp, Facebook, Instagram, Threads and YouTube (customer pages only)
 - [x] Verify links, open/close and Esc on desktop and mobile
 
 ## Privacy page refresh
