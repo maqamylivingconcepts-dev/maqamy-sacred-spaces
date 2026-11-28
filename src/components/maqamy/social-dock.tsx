@@ -3,6 +3,7 @@ import { AtSign, Clock, Compass, Facebook, Instagram, Smartphone, X, Youtube, ty
 import { useEffect, useRef, useState, type ComponentType } from "react";
 
 import { useLang } from "@/lib/i18n";
+import { QIBLAH_ENABLED } from "@/lib/waktu-solat";
 
 /* MAQAMY contact channels. */
 const WHATSAPP_NUMBER = "60186693631";
@@ -57,12 +58,16 @@ export function SocialDock() {
         {[...tools.map((tool) => ({ kind: "tool" as const, ...tool })), ...channels.map((c) => ({ kind: "link" as const, ...c }))].map((item, i, all) => {
           const Icon = item.icon;
           const delay = `${(all.length - 1 - i) * 40}ms`;
-          const circle = item.kind === "tool"
-            ? "bg-brand-gold text-brand-forest"
-            : "bg-brand-forest text-brand-gold-soft";
+          const disabled = item.kind === "tool" && item.to === "/qiblah" && !QIBLAH_ENABLED;
+          const circle = disabled
+            ? "bg-brand-forest text-brand-gold-soft/40"
+            : item.kind === "tool"
+              ? "bg-brand-gold text-brand-forest"
+              : "bg-brand-forest text-brand-gold-soft";
           const face = (
-            <span className={`flex size-12 items-center justify-center rounded-full ${circle} ring-1 ring-brand-gold/50 shadow-[0_8px_24px_-8px_rgb(0_0_0/0.45)] group-hover:scale-105`}>
+            <span className={`relative flex size-12 items-center justify-center rounded-full ${circle} ring-1 ring-brand-gold/50 shadow-[0_8px_24px_-8px_rgb(0_0_0/0.45)] ${disabled ? "" : "group-hover:scale-105"}`}>
               <Icon className="size-5" />
+              {disabled ? <span aria-hidden="true" className="absolute h-0.5 w-9 rotate-45 rounded-full bg-brand-gold-soft/80" /> : null}
             </span>
           );
           return (
@@ -71,7 +76,9 @@ export function SocialDock() {
               style={{ transitionDelay: open ? delay : "0ms" }}
               className={`transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"}`}
             >
-              {item.kind === "tool" ? (
+              {disabled ? (
+                <span role="img" aria-label={`${item.label} — ${t("coming soon", "akan datang")}`} title={t("Coming soon", "Akan datang")} className="flex cursor-not-allowed">{face}</span>
+              ) : item.kind === "tool" ? (
                 <Link to={item.to} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} aria-label={item.label} title={item.label} className="group flex">{face}</Link>
               ) : (
                 <a href={item.href} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} aria-label={item.label} title={item.label} className="group flex">{face}</a>

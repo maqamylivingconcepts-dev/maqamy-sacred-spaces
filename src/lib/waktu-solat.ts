@@ -71,6 +71,12 @@ export const ZONES: Zone[] = [
 ];
 
 export const DEFAULT_ZONE = "WLY01";
+
+/**
+ * The Qiblah compass is shown crossed out in navigation until it has been
+ * tested on real phones; /qiblah stays reachable by direct link for testing.
+ */
+export const QIBLAH_ENABLED = false;
 export const isZoneCode = (code: string) => ZONES.some((z) => z.code === code);
 export const zoneByCode = (code: string) => ZONES.find((z) => z.code === code) ?? ZONES.find((z) => z.code === DEFAULT_ZONE)!;
 

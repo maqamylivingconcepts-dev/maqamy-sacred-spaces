@@ -19,3 +19,10 @@
 Official zone times are fetched by our own `/api/public/waktu-solat` endpoint
 (cached one hour); the site never names the source. The earlier on-device
 calculation draft was dropped — it ran up to 9 minutes early for Subuh.
+
+## Qiblah on hold (testing)
+
+`QIBLAH_ENABLED = false` in `src/lib/waktu-solat.ts`: the Qiblah icon (phone
+button) and tab (Watch screen) are shown crossed out with "Coming soon";
+`/qiblah` still opens by direct link for testing. Set it to `true` to switch
+the compass back on.

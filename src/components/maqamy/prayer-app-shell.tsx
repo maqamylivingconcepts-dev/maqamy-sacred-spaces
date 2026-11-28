@@ -4,7 +4,7 @@ import { useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 import { useLang } from "@/lib/i18n";
-import { ZONES, inMalaysia, nearestZone, zoneByCode } from "@/lib/waktu-solat";
+import { QIBLAH_ENABLED, ZONES, inMalaysia, nearestZone, zoneByCode } from "@/lib/waktu-solat";
 
 const STATES = [...new Set(ZONES.map((z) => z.state))];
 
@@ -87,7 +87,14 @@ export function PrayerAppShell({ active, zone, onZone, children }: {
       <div className="mx-auto w-full max-w-5xl flex-1 px-5 pb-6 sm:px-8">{children}</div>
 
       <nav className="sticky bottom-0 mx-auto flex w-full max-w-5xl justify-center gap-10 border-t border-brand-gold/25 bg-[#0b2417]/90 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur sm:gap-24" aria-label={t("Prayer tools", "Alat solat")}>
-        <Link to="/qiblah" className={tab("qiblah")} aria-current={active === "qiblah" ? "page" : undefined}><QiblahGlyph className="size-6" />{t("Qiblah", "Kiblat")}</Link>
+        {QIBLAH_ENABLED || active === "qiblah" ? (
+          <Link to="/qiblah" className={tab("qiblah")} aria-current={active === "qiblah" ? "page" : undefined}><QiblahGlyph className="size-6" />{t("Qiblah", "Kiblat")}</Link>
+        ) : (
+          <span role="img" aria-label={`${t("Qiblah", "Kiblat")} — ${t("coming soon", "akan datang")}`} title={t("Coming soon", "Akan datang")} className="relative flex cursor-not-allowed flex-col items-center gap-1.5 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.28em] text-brand-gold/30">
+            <span className="relative flex items-center justify-center"><QiblahGlyph className="size-6" /><span aria-hidden="true" className="absolute h-0.5 w-8 rotate-45 rounded-full bg-brand-gold/50" /></span>
+            <span className="line-through">{t("Qiblah", "Kiblat")}</span>
+          </span>
+        )}
         <Link to="/waktu-solat" className={tab("watch")} aria-current={active === "watch" ? "page" : undefined}><ClockGlyph className="size-6" />{t("Watch", "Jam")}</Link>
       </nav>
 
