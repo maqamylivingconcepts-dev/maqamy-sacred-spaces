@@ -11,8 +11,8 @@ import { DrawnArabic, MeaningWord, RevealText } from "@/components/maqamy/story-
 
 const NUMERALS = ["I", "II", "III", "IV", "V"];
 const GOLD_PHRASES = [
-  "bring the heart into presence", "a place to return", "the presence of the heart", "From Malaysia, for the world.",
-  "menghadirkan hati", "tempat untuk kembali", "kehadiran hati", "Dari Malaysia, untuk dunia.",
+  "bring the heart into presence", "a place to return", "the presence of the heart", "Made in Malaysia, For The World.",
+  "menghadirkan hati", "tempat untuk kembali", "kehadiran hati", "Dibuat di Malaysia, Untuk Dunia.",
 ];
 
 export const Route = createFileRoute("/story")({
