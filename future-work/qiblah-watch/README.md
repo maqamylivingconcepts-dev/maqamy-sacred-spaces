@@ -2,8 +2,9 @@
 
 **Built** (on branch `claude/maqamy-website-j59osq`; goes live once merged to `main`).
 
-- The phone contact button slides **Prayer times** (clock) and **Qiblah**
-  (compass) out to the left in gold; social icons still slide up.
+- Tapping the phone contact button slides up, top to bottom: **Prayer times**
+  (gold clock), **Qiblah** (gold compass), then WhatsApp, Facebook, Instagram,
+  Threads and YouTube.
 - `/waktu-solat` — live Malaysia clock, Gregorian and Hijri date, Imsak ·
   Subuh · Syuruk · Zohor · Asar · Maghrib · Isyak, next prayer with countdown,
   zone picker (all Malaysian zones) and "Use my location" (nearest zone).

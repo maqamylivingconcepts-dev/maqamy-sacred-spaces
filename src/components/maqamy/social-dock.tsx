@@ -22,7 +22,7 @@ function WhatsAppGlyph({ className = "" }: { className?: string }) {
 
 type Channel = { key: string; label: string; href: string; icon: LucideIcon | ComponentType<{ className?: string }> };
 
-/** Floating contact button: social links slide up; Prayer times and Qiblah slide out to the left. */
+/** Floating contact button: Prayer times and Qiblah, then the social links, slide up above it. */
 export function SocialDock() {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -53,53 +53,33 @@ export function SocialDock() {
   return (
     <div ref={root} className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-3 sm:bottom-8 sm:right-8">
       <ul id="maqamy-social-links" aria-hidden={!open} className="flex flex-col items-center gap-3">
-        {channels.map((c, i) => {
-          const Icon = c.icon;
-          const delay = `${(channels.length - 1 - i) * 45}ms`;
+        {/* Prayer times and Qiblah (gold) sit on top, above the social links. */}
+        {[...tools.map((tool) => ({ kind: "tool" as const, ...tool })), ...channels.map((c) => ({ kind: "link" as const, ...c }))].map((item, i, all) => {
+          const Icon = item.icon;
+          const delay = `${(all.length - 1 - i) * 40}ms`;
+          const circle = item.kind === "tool"
+            ? "bg-brand-gold text-brand-forest"
+            : "bg-brand-forest text-brand-gold-soft";
+          const face = (
+            <span className={`flex size-12 items-center justify-center rounded-full ${circle} ring-1 ring-brand-gold/50 shadow-[0_8px_24px_-8px_rgb(0_0_0/0.45)] group-hover:scale-105`}>
+              <Icon className="size-5" />
+            </span>
+          );
           return (
             <li
-              key={c.key}
+              key={item.kind === "tool" ? item.to : item.key}
               style={{ transitionDelay: open ? delay : "0ms" }}
               className={`transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0"}`}
             >
-              <a
-                href={c.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={open ? 0 : -1}
-                onClick={() => setOpen(false)}
-                aria-label={c.label}
-                title={c.label}
-                className="group flex"
-              >
-                <span className="flex size-12 items-center justify-center rounded-full bg-brand-forest text-brand-gold-soft ring-1 ring-brand-gold/50 shadow-[0_8px_24px_-8px_rgb(0_0_0/0.45)] group-hover:scale-105">
-                  <Icon className="size-5" />
-                </span>
-              </a>
+              {item.kind === "tool" ? (
+                <Link to={item.to} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} aria-label={item.label} title={item.label} className="group flex">{face}</Link>
+              ) : (
+                <a href={item.href} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} aria-label={item.label} title={item.label} className="group flex">{face}</a>
+              )}
             </li>
           );
         })}
       </ul>
-      <div className="relative">
-        {/* Watch and Qiblah slide out to the left of the phone button. */}
-        <ul aria-hidden={!open} className="absolute right-full top-1/2 mr-3 flex -translate-y-1/2 flex-row-reverse items-center gap-3">
-          {tools.map((tool, i) => {
-            const Icon = tool.icon;
-            return (
-              <li
-                key={tool.to}
-                style={{ transitionDelay: open ? `${i * 60}ms` : "0ms" }}
-                className={`transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "translate-x-0 opacity-100" : "pointer-events-none translate-x-3 opacity-0"}`}
-              >
-                <Link to={tool.to} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} aria-label={tool.label} title={tool.label} className="group flex">
-                  <span className="flex size-12 items-center justify-center rounded-full bg-brand-gold text-brand-forest ring-1 ring-brand-gold/50 shadow-[0_8px_24px_-8px_rgb(0_0_0/0.45)] group-hover:scale-105">
-                    <Icon className="size-5" />
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
       <button
         type="button"
         aria-expanded={open}
@@ -110,7 +90,6 @@ export function SocialDock() {
       >
         <span className={`transition-transform duration-300 ${open ? "rotate-90" : ""}`}>{open ? <X className="size-6" /> : <Smartphone className="size-6" />}</span>
       </button>
-      </div>
     </div>
   );
 }

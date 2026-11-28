@@ -1,7 +1,7 @@
 # MAQAMY rebuild
 
 ## Prayer times & Qiblah
-- [x] Phone button slides Prayer times and Qiblah out to the left
+- [x] Phone button shows Prayer times and Qiblah at the top of the column, above WhatsApp
 - [x] /waktu-solat: official zone times, live clock, Hijri date, next-prayer countdown, zone picker and location
 - [x] /qiblah: live compass with facing confirmation; degrees and distance on desktop
 
