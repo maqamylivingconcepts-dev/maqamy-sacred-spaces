@@ -348,3 +348,9 @@ button:active:not(:disabled), [role="button"]:active, a:active {
 .preview-navigation { font-size: var(--type-navigation-preview); line-height: 1.4; }
 .preview-footer { font-size: var(--type-footer-preview); line-height: 1.4; }
 .preview-accountHeading { font-size: var(--type-accountHeading-preview); line-height: 1.4; }
+
+/* Prayer app screens (Qiblah & Watch): deep green with a soft centre glow. */
+.maqamy-prayer-app {
+  background:
+    radial-gradient(120% 70% at 50% 35%, oklch(0.36 0.07 155) 0%, oklch(0.25 0.055 155) 45%, oklch(0.17 0.04 155) 100%);
+}

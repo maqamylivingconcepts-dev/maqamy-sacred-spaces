@@ -1,45 +1,35 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Clock, Compass } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 
-import { SiteFooter, SiteHeader } from "@/components/maqamy/site-chrome";
-import { Button } from "@/components/ui/button";
-import { useCart } from "@/lib/use-cart";
+import { PrayerAppShell } from "@/components/maqamy/prayer-app-shell";
 import { useLang } from "@/lib/i18n";
-import { distanceToKaaba, qiblahBearing } from "@/lib/waktu-solat";
+import { useZone } from "@/lib/use-prayer-week";
+import { distanceToKaaba, qiblahBearing, zoneByCode } from "@/lib/waktu-solat";
 
 export const Route = createFileRoute("/qiblah")({
   head: () => ({ meta: [
-    { title: "Qiblah Direction — MAQAMY" },
+    { title: "Qiblah — MAQAMY" },
     { name: "description", content: "Find the Qiblah from where you are, with a live compass on your phone." },
-    { property: "og:title", content: "Qiblah Direction — MAQAMY" },
+    { property: "og:title", content: "Qiblah — MAQAMY" },
     { property: "og:description", content: "A live Qiblah compass on your phone." },
   ] }),
   component: QiblahPage,
 });
 
-const KL = { lat: 3.139, lng: 101.6869 };
-const diff = (a: number, b: number) => { const d = Math.abs(((a - b) % 360) + 360) % 360; return d > 180 ? 360 - d : d; };
-
+const diff = (a: number, b: number) => { const d = (((a - b) % 360) + 360) % 360; return d > 180 ? 360 - d : d; };
 type OrientationWithCompass = DeviceOrientationEvent & { webkitCompassHeading?: number };
 type OrientationPermission = { requestPermission?: () => Promise<"granted" | "denied"> };
 
-/** Live compass heading (degrees from north) when the device has one. */
+/** Live compass heading (degrees from north) once started, when the device has one. */
 function useHeading(active: boolean) {
   const [heading, setHeading] = useState<number | null>(null);
   useEffect(() => {
     if (!active) return;
-    const onAbsolute = (e: DeviceOrientationEvent) => {
-      if (e.alpha == null) return;
-      const screen = (window.screen.orientation?.angle ?? 0);
-      setHeading((360 - e.alpha + screen) % 360);
-    };
-    const onIOS = (e: Event) => {
-      const h = (e as OrientationWithCompass).webkitCompassHeading;
-      if (typeof h === "number") setHeading((h + (window.screen.orientation?.angle ?? 0)) % 360);
-    };
-    const hasAbsolute = "ondeviceorientationabsolute" in window;
-    if (hasAbsolute) window.addEventListener("deviceorientationabsolute", onAbsolute as EventListener);
+    const angle = () => window.screen.orientation?.angle ?? 0;
+    const onAbsolute = (e: DeviceOrientationEvent) => { if (e.alpha != null) setHeading((360 - e.alpha + angle()) % 360); };
+    const onIOS = (e: Event) => { const h = (e as OrientationWithCompass).webkitCompassHeading; if (typeof h === "number") setHeading((h + angle()) % 360); };
+    const absolute = "ondeviceorientationabsolute" in window;
+    if (absolute) window.addEventListener("deviceorientationabsolute", onAbsolute as EventListener);
     else window.addEventListener("deviceorientation", onIOS);
     return () => {
       window.removeEventListener("deviceorientationabsolute", onAbsolute as EventListener);
@@ -49,16 +39,85 @@ function useHeading(active: boolean) {
   return heading;
 }
 
+const C = 200; // compass centre in SVG units
+const polar = (r: number, deg: number) => [C + r * Math.sin((deg * Math.PI) / 180), C - r * Math.cos((deg * Math.PI) / 180)] as const;
+
+function Compass({ bearing, heading, facing, label }: { bearing: number; heading: number | null; facing: boolean; label: string }) {
+  const rotate = heading != null ? -heading : 0;
+  const cardinal: Record<number, string> = { 0: "N", 90: "E", 180: "S", 270: "W" };
+  return (
+    <div className="relative mx-auto aspect-square w-full max-w-[24rem]">
+      <svg viewBox="0 0 400 400" className="h-full w-full overflow-visible" role="img" aria-label={label}>
+        <defs>
+          <linearGradient id="q-gold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#f3dc9b" /><stop offset="0.35" stopColor="#c9a24c" /><stop offset="0.65" stopColor="#8f6a24" /><stop offset="1" stopColor="#e8c879" />
+          </linearGradient>
+          <radialGradient id="q-face" cx="0.5" cy="0.45" r="0.6">
+            <stop offset="0" stopColor="#1f5a3c" /><stop offset="0.7" stopColor="#123826" /><stop offset="1" stopColor="#0b2417" />
+          </radialGradient>
+          <linearGradient id="q-needle" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#f6e6b8" /><stop offset="1" stopColor="#c9a24c" />
+          </linearGradient>
+        </defs>
+
+        {/* Fixed marker: where the phone is pointing */}
+        <path d={`M${C - 11} 0 L${C + 11} 0 L${C} 18 Z`} fill={facing ? "#f3dc9b" : "#c9a24c"} />
+
+        <g style={{ transform: `rotate(${rotate}deg)`, transformOrigin: "200px 200px", transition: "transform 0.25s ease-out" }}>
+          <circle cx={C} cy={C} r="182" fill="url(#q-gold)" />
+          <circle cx={C} cy={C} r="170" fill="#0b2417" />
+          <circle cx={C} cy={C} r="140" fill="url(#q-face)" stroke="url(#q-gold)" strokeWidth="2" />
+          {/* Degree ticks */}
+          {Array.from({ length: 180 }, (_, i) => {
+            const d = i * 2;
+            const long = d % 30 === 0, mid = d % 10 === 0;
+            const [x1, y1] = polar(long ? 146 : mid ? 152 : 158, d);
+            const [x2, y2] = polar(166, d);
+            return <line key={d} x1={x1} y1={y1} x2={x2} y2={y2} stroke={long ? "#f3dc9b" : "#c9a24c"} strokeOpacity={long ? 1 : mid ? 0.85 : 0.5} strokeWidth={long ? 2.2 : 1} />;
+          })}
+          {/* Cardinal letters and degree numbers */}
+          {Array.from({ length: 12 }, (_, i) => {
+            const d = i * 30;
+            const [x, y] = polar(cardinal[d] ? 120 : 124, d);
+            return cardinal[d] ? (
+              <text key={d} x={x} y={y} textAnchor="middle" dominantBaseline="central" fontSize="26" fill="#f6efe0" className="font-display" transform={`rotate(${d} ${x} ${y})`}>{cardinal[d]}</text>
+            ) : (
+              <text key={d} x={x} y={y} textAnchor="middle" dominantBaseline="central" fontSize="13" fill="#e8c879" className="font-display" transform={`rotate(${d} ${x} ${y})`}>{d}</text>
+            );
+          })}
+          {/* Fine rings */}
+          {[100, 88, 76].map((r) => <circle key={r} cx={C} cy={C} r={r} fill="none" stroke="#c9a24c" strokeOpacity="0.12" />)}
+
+          {/* Qiblah needle with Kaaba badge */}
+          <g transform={`rotate(${bearing} ${C} ${C})`}>
+            <path d={`M${C} ${C - 152} L${C + 9} ${C - 112} L${C + 4} ${C - 66} L${C - 4} ${C - 66} L${C - 9} ${C - 112} Z`} fill="url(#q-needle)" stroke="#8f6a24" strokeWidth="0.8" />
+            <circle cx={C} cy={C - 92} r="12" fill="#0b2417" stroke="url(#q-gold)" strokeWidth="2.5" />
+            <rect x={C - 6} y={C - 98} width="12" height="12" rx="1" fill="#e8c879" />
+            <rect x={C - 6} y={C - 95} width="12" height="2" fill="#0b2417" />
+          </g>
+        </g>
+
+        {/* Centre medallion (does not rotate) */}
+        <circle cx={C} cy={C} r="64" fill="#0b2417" stroke="url(#q-gold)" strokeWidth="2" />
+        <circle cx={C} cy={C} r="58" fill="none" stroke="#c9a24c" strokeOpacity="0.35" />
+        <text x={C} y={C - 2} textAnchor="middle" fontSize="44" fill="#f6efe0" className="font-display">{Math.round(bearing)}°</text>
+        <text x={C} y={C + 28} textAnchor="middle" fontSize="10" letterSpacing="3" fill="#e8c879">BEARING</text>
+      </svg>
+    </div>
+  );
+}
+
 function QiblahPage() {
-  const { itemCount, userEmail, signOut } = useCart();
   const { t } = useLang();
+  const [zone, setZone] = useZone();
   const [place, setPlace] = useState<{ lat: number; lng: number } | null>(null);
   const [started, setStarted] = useState(false);
-  const [notice, setNotice] = useState<string | null>(null);
+  const [notice, setNotice] = useState<{ title: string; body: string } | null>(null);
   const heading = useHeading(started);
   const buzzed = useRef(false);
 
-  const here = place ?? KL;
+  const zonePoint = zoneByCode(zone);
+  const here = place ?? { lat: zonePoint.lat, lng: zonePoint.lng };
   const bearing = qiblahBearing(here.lat, here.lng);
   const km = Math.round(distanceToKaaba(here.lat, here.lng));
   const facing = heading != null && diff(heading, bearing) <= 4;
@@ -68,77 +127,72 @@ function QiblahPage() {
     if (!facing) buzzed.current = false;
   }, [facing]);
 
+  // If no compass reading arrives shortly after starting, explain why.
+  useEffect(() => {
+    if (!started || heading != null) return;
+    const id = window.setTimeout(() => setNotice((n) => n ?? {
+      title: t("No compass detected.", "Tiada kompas dikesan."),
+      body: t("On a phone, allow Motion & Orientation for this site and hold it flat. On a computer, follow the bearing shown.", "Pada telefon, benarkan Gerakan & Orientasi untuk laman ini dan pegang mendatar. Pada komputer, ikut arah darjah yang ditunjukkan."),
+    }), 2500);
+    return () => window.clearTimeout(id);
+  }, [started, heading, t]);
+
   const start = async () => {
     setNotice(null);
     const Orientation = (window as unknown as { DeviceOrientationEvent?: OrientationPermission }).DeviceOrientationEvent;
     if (Orientation?.requestPermission) {
-      try { if ((await Orientation.requestPermission()) !== "granted") setNotice(t("Compass access was not allowed. The direction below is still correct.", "Akses kompas tidak dibenarkan. Arah di bawah masih tepat.")); } catch { /* ignore */ }
+      try {
+        if ((await Orientation.requestPermission()) !== "granted") setNotice({ title: t("Motion access was not allowed.", "Akses gerakan tidak dibenarkan."), body: t("Allow Motion & Orientation for this site in Settings, then try again.", "Benarkan Gerakan & Orientasi untuk laman ini dalam Tetapan, kemudian cuba lagi.") });
+      } catch { /* ignore */ }
     }
     setStarted(true);
     navigator.geolocation?.getCurrentPosition(
       ({ coords }) => setPlace({ lat: coords.latitude, lng: coords.longitude }),
-      () => setNotice(t("We couldn't get your location, so this shows the direction from Kuala Lumpur.", "Lokasi anda tidak dapat diperoleh, jadi ini menunjukkan arah dari Kuala Lumpur.")),
+      () => { /* keep the zone's location */ },
       { enableHighAccuracy: true, timeout: 10_000, maximumAge: 600_000 },
     );
   };
 
-  // The dial turns so its N matches real north; the top marker is where the phone points.
-  const dialRotation = heading != null ? -heading : 0;
+  const status = facing
+    ? { title: t("You're facing the Qiblah", "Anda menghadap kiblat"), body: "" }
+    : heading != null
+      ? { title: t("Turn until the Kaaba meets the marker", "Pusing sehingga Kaabah bertemu penanda"), body: "" }
+      : notice;
 
   return (
-    <main className="min-h-screen bg-brand-cream text-brand-forest">
-      <SiteHeader tone="dark" itemCount={itemCount} userEmail={userEmail} onSignOut={signOut} />
-      <section className="bg-brand-forest px-5 py-14 text-center text-brand-cream sm:px-8 lg:py-20">
-        <p className="type-label text-[11px] font-semibold uppercase tracking-[0.3em] text-brand-gold-soft">{t("Qiblah", "Kiblat")}</p>
-        <h1 className="type-heading mt-4 font-display text-4xl font-light sm:text-5xl">{t("Find the Qiblah", "Cari arah kiblat")}</h1>
+    <PrayerAppShell active="qiblah" zone={zone} onZone={setZone}>
+      <section className="flex flex-col items-center pt-8 text-center">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-brand-gold">{t("Qiblah direction", "Arah kiblat")}</p>
+        <div className="mt-3 w-full"><Compass bearing={bearing} heading={heading} facing={facing} label={t(`Qiblah is ${Math.round(bearing)} degrees from north`, `Kiblat ${Math.round(bearing)} darjah dari utara`)} /></div>
 
-        <div className="relative mx-auto mt-10 aspect-square w-full max-w-[20rem]">
-          {/* Phone direction marker */}
-          <span className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-2 border-x-[9px] border-t-[14px] border-x-transparent ${facing ? "border-t-brand-gold" : "border-t-brand-cream"}`} aria-hidden="true" />
-          <div className="h-full w-full overflow-hidden rounded-full">
-          <svg viewBox="0 0 300 300" className="h-full w-full transition-transform duration-200 ease-out" style={{ transform: `rotate(${dialRotation}deg)` }} role="img" aria-label={t(`Qiblah is ${Math.round(bearing)} degrees from north`, `Kiblat ${Math.round(bearing)} darjah dari utara`)}>
-            <circle cx="150" cy="150" r="140" fill="none" stroke="currentColor" strokeOpacity="0.25" />
-            <circle cx="150" cy="150" r="118" fill="none" className={facing ? "stroke-brand-gold" : ""} stroke="currentColor" strokeOpacity={facing ? 1 : 0.15} strokeWidth={facing ? 2 : 1} />
-            {Array.from({ length: 72 }, (_, i) => (
-              <line key={i} x1="150" y1={i % 18 === 0 ? 14 : i % 2 === 0 ? 18 : 21} x2="150" y2="26" stroke="currentColor" strokeOpacity={i % 18 === 0 ? 0.9 : 0.35} transform={`rotate(${i * 5} 150 150)`} />
-            ))}
-            {(["N", "E", "S", "W"] as const).map((c, i) => (
-              <text key={c} x="150" y="48" textAnchor="middle" fontSize="16" fill="currentColor" fillOpacity={c === "N" ? 1 : 0.6} transform={`rotate(${i * 90} 150 150)`} className="font-display">{c}</text>
-            ))}
-            {/* Qiblah needle */}
-            <g transform={`rotate(${bearing} 150 150)`}>
-              <line x1="150" y1="150" x2="150" y2="62" className="stroke-brand-gold" strokeWidth="3" strokeLinecap="round" />
-              <rect x="139" y="40" width="22" height="22" rx="2" className="fill-brand-gold" />
-              <rect x="139" y="46" width="22" height="3" fill="#0b1a10" fillOpacity="0.55" />
-            </g>
-            <circle cx="150" cy="150" r="6" className="fill-brand-gold" />
-          </svg>
-          </div>
+        <div className="mt-5 min-h-12" aria-live="polite">
+          {status ? (
+            <>
+              <p className={`font-display text-lg ${facing ? "text-brand-gold" : "text-brand-cream"}`}>{status.title}</p>
+              {status.body ? <p className="mt-1 max-w-sm text-xs text-brand-cream/60">{status.body}</p> : null}
+            </>
+          ) : null}
         </div>
 
-        <p className={`mt-8 font-display text-2xl ${facing ? "text-brand-gold" : ""}`} aria-live="polite">
-          {facing ? t("You're facing the Qiblah", "Anda menghadap kiblat") : heading != null ? t("Turn until the gold Kaaba is at the top", "Pusing sehingga Kaabah emas berada di atas") : t(`${Math.round(bearing)}° from North`, `${Math.round(bearing)}° dari Utara`)}
-        </p>
-        <p className="mt-2 text-sm text-brand-cream/70">
-          {t(`${Math.round(bearing)}° from North · ${km.toLocaleString("en")} km to Makkah`, `${Math.round(bearing)}° dari Utara · ${km.toLocaleString("en")} km ke Makkah`)}
-          {place ? "" : t(" · from Kuala Lumpur", " · dari Kuala Lumpur")}
-        </p>
-
-        {!started ? (
-          <Button type="button" variant="gold" size="lg" onClick={() => void start()} className="mt-8 rounded-none"><Compass /> {t("Start compass", "Mulakan kompas")}</Button>
-        ) : heading == null ? (
-          <p className="mx-auto mt-6 max-w-sm text-sm text-brand-cream/70">{t("No compass detected. On a phone, hold it flat; on a computer, use the direction in degrees above.", "Tiada kompas dikesan. Pada telefon, pegang mendatar; pada komputer, gunakan arah dalam darjah di atas.")}</p>
+        {!started || (heading == null && notice) ? (
+          <button type="button" onClick={() => void start()} className="mt-4 rounded-full bg-brand-gold px-8 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-brand-forest shadow-[0_10px_30px_-12px_rgb(0_0_0/0.6)]">
+            {t("Start compass", "Mulakan kompas")}
+          </button>
         ) : null}
-        {notice && heading == null ? <p className="mx-auto mt-4 max-w-sm text-sm text-brand-gold-soft">{notice}</p> : null}
-      </section>
 
-      <section className="px-5 py-12 sm:px-8">
-        <div className="mx-auto max-w-xl text-center">
-          <p className="text-sm leading-7 text-brand-forest/70">{t("For the best accuracy, hold your phone flat and away from metal or magnets. If the needle seems off, move your phone in a figure-of-eight to calibrate.", "Untuk ketepatan terbaik, pegang telefon mendatar dan jauh dari logam atau magnet. Jika jarum kelihatan tersasar, gerakkan telefon dalam bentuk angka lapan untuk menentukur.")}</p>
-          <Button asChild variant="maqamy" size="lg" className="mt-8 rounded-none"><Link to="/waktu-solat"><Clock /> {t("Prayer times", "Waktu solat")}</Link></Button>
-        </div>
+        <dl className="mt-8 grid w-full max-w-md grid-cols-3 divide-x divide-brand-gold/25 border-y border-brand-gold/25">
+          {[
+            { v: `${bearing.toFixed(1)}°`, k: t("Qiblah", "Kiblat") },
+            { v: heading != null ? `${Math.round(heading)}°` : "—", k: t("Heading", "Hala") },
+            { v: `${km.toLocaleString("en")} km`, k: t("To Makkah", "Ke Makkah") },
+          ].map((s) => (
+            <div key={s.k} className="flex flex-col-reverse px-2 py-3">
+              <dt className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-brand-gold">{s.k}</dt>
+              <dd className="font-display text-lg text-brand-cream">{s.v}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
-      <SiteFooter />
-    </main>
+    </PrayerAppShell>
   );
 }

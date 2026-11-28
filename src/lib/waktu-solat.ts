@@ -192,3 +192,31 @@ export function distanceToKaaba(lat: number, lng: number): number {
   const a = Math.sin(dLat / 2) ** 2 + Math.cos(rad(lat)) * Math.cos(rad(KAABA.lat)) * Math.sin(dLng / 2) ** 2;
   return 2 * 6371 * Math.asin(Math.sqrt(a));
 }
+
+/* ---------- Makkah & Madinah ---------- */
+
+export const HOLY_CITIES = [
+  { key: "makkah", en: "Makkah", ms: "Makkah", lat: 21.4225, lng: 39.8262 },
+  { key: "madinah", en: "Madinah", ms: "Madinah", lat: 24.4672, lng: 39.6111 },
+] as const;
+
+/**
+ * Zohor (local solar noon) for a city on UTC+3, as an absolute moment.
+ * Uses the equation of time; accurate to about a minute.
+ */
+export function noonUTC3(now: Date, lng: number): Date {
+  const local = new Date(now.getTime() + 3 * 3600_000);
+  const y = local.getUTCFullYear(), m = local.getUTCMonth(), d = local.getUTCDate();
+  const jd = Date.UTC(y, m, d, 12) / 86_400_000 + 2440587.5;
+  const D = jd - 2451545.0;
+  const g = ((357.529 + 0.98560028 * D) % 360) * (Math.PI / 180);
+  const q = (280.459 + 0.98564736 * D) % 360;
+  const L = (q + 1.915 * Math.sin(g) + 0.02 * Math.sin(2 * g)) * (Math.PI / 180);
+  const e = (23.439 - 0.00000036 * D) * (Math.PI / 180);
+  const RA = ((Math.atan2(Math.cos(e) * Math.sin(L), Math.cos(L)) * 180) / Math.PI / 15 + 24) % 24;
+  let eqt = q / 15 - RA;
+  eqt = ((eqt + 12) % 24 + 24) % 24 - 12;
+  const hours = 12 + 3 - lng / 15 - eqt; // local clock hours on UTC+3
+  const minutes = Math.ceil(hours * 60);
+  return new Date(Date.UTC(y, m, d, 0, minutes) - 3 * 3600_000);
+}

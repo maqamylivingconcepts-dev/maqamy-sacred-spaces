@@ -1,7 +1,7 @@
 import { describe, it as test } from "node:test";
 import { strict as assert } from "node:assert";
 import {
-  ZONES, distanceToKaaba, formatHijri, malaysiaDate, nearestZone, nextPrayer, normaliseWeek, parseSourceDate, qiblahBearing,
+  HOLY_CITIES, ZONES, distanceToKaaba, formatHijri, noonUTC3, malaysiaDate, nearestZone, nextPrayer, normaliseWeek, parseSourceDate, qiblahBearing,
 } from "./waktu-solat";
 
 const sample = {
@@ -62,5 +62,14 @@ describe("zones and Qiblah", () => {
   test("formats the Hijri date", () => {
     assert.equal(formatHijri("1448-06-18", "ms"), "18 Jamadilakhir 1448H");
     assert.equal(formatHijri("1448-06-18", "en"), "18 Jumada al-Akhirah 1448H");
+  });
+});
+
+describe("Makkah and Madinah Zohor", () => {
+  test("Makkah Zohor on 28 Nov 2026 is about 12:09 local time", () => {
+    const z = noonUTC3(new Date("2026-11-28T04:00:00Z"), HOLY_CITIES[0].lng);
+    const local = new Date(z.getTime() + 3 * 3600_000);
+    const mins = local.getUTCHours() * 60 + local.getUTCMinutes();
+    assert.ok(Math.abs(mins - (12 * 60 + 9)) <= 2, local.toISOString());
   });
 });

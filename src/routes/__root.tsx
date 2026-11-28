@@ -129,7 +129,7 @@ function RootComponent() {
         {pathname.startsWith("/admin") ? <Outlet /> : <TypographyProvider><Outlet /></TypographyProvider>}
       </div>
       {pathname.startsWith("/admin") ? null : <LanguagePicker />}
-      {pathname.startsWith("/admin") ? null : <SocialDock />}
+      {pathname.startsWith("/admin") || pathname === "/qiblah" || pathname === "/waktu-solat" ? null : <SocialDock />}
       <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
