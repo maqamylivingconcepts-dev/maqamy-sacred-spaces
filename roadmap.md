@@ -1,5 +1,10 @@
 # MAQAMY rebuild
 
+## Prayer times & Qiblah
+- [x] Phone button slides Prayer times and Qiblah out to the left
+- [x] /waktu-solat: official zone times, live clock, Hijri date, next-prayer countdown, zone picker and location
+- [x] /qiblah: live compass with facing confirmation; degrees and distance on desktop
+
 ## Interactive story
 - [x] Words light up as you read with gold key phrases, tap-to-reveal maqām meaning card, حضور القلب drawn in gold (reduced-motion safe, EN/BM)
 

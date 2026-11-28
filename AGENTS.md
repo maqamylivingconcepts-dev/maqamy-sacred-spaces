@@ -26,3 +26,4 @@
 - Store owner-managed typography overrides by semantic text role and independent desktop/mobile sizes; apply only to customer pages so admin controls remain usable, with empty overrides preserving original responsive sizing.
 - New orders take sequential `YYYYMMDDNNN` numbers (Malaysia date) from `next_order_number()` and invoices reuse the order number, so tax records trace one reference.
 - Replaceable website images resolve through `site_assets` overrides with built-in fallbacks (`useSiteAsset`/`SiteImg`), so the owner can swap any image without code.
+- Prayer times come from the official Malaysian zone timetable through the cached `/api/public/waktu-solat` endpoint (browser falls back to the public timetable directly); never compute them on-device and never name the source on the site.

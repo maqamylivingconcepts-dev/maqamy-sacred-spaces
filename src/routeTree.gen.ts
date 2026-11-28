@@ -16,10 +16,13 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as CollectionsRouteImport } from './routes/collections'
 import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as QiblahRouteImport } from './routes/qiblah'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as StoryRouteImport } from './routes/story'
+import { Route as WaktuSolatRouteImport } from './routes/waktu-solat'
 import { Route as ApiPublicAdminRouteImport } from './routes/api/public/admin'
 import { Route as ApiPublicShopperVerifyRouteImport } from './routes/api/public/shopper-verify'
+import { Route as ApiPublicWaktuSolatRouteImport } from './routes/api/public/waktu-solat'
 import { Route as ApiPublicPaymentsCheckoutRouteImport } from './routes/api/public/payments/checkout'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
@@ -60,6 +63,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QiblahRoute = QiblahRouteImport.update({
+  id: '/qiblah',
+  path: '/qiblah',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -70,6 +78,11 @@ const StoryRoute = StoryRouteImport.update({
   path: '/story',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WaktuSolatRoute = WaktuSolatRouteImport.update({
+  id: '/waktu-solat',
+  path: '/waktu-solat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicAdminRoute = ApiPublicAdminRouteImport.update({
   id: '/api/public/admin',
   path: '/api/public/admin',
@@ -78,6 +91,11 @@ const ApiPublicAdminRoute = ApiPublicAdminRouteImport.update({
 const ApiPublicShopperVerifyRoute = ApiPublicShopperVerifyRouteImport.update({
   id: '/api/public/shopper-verify',
   path: '/api/public/shopper-verify',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicWaktuSolatRoute = ApiPublicWaktuSolatRouteImport.update({
+  id: '/api/public/waktu-solat',
+  path: '/api/public/waktu-solat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicPaymentsCheckoutRoute =
@@ -111,10 +129,13 @@ export interface FileRoutesByFullPath {
   '/collections': typeof CollectionsRoute
   '/orders': typeof OrdersRoute
   '/privacy': typeof PrivacyRoute
+  '/qiblah': typeof QiblahRoute
   '/reset-password': typeof ResetPasswordRoute
   '/story': typeof StoryRoute
+  '/waktu-solat': typeof WaktuSolatRoute
   '/api/public/admin': typeof ApiPublicAdminRoute
   '/api/public/shopper-verify': typeof ApiPublicShopperVerifyRoute
+  '/api/public/waktu-solat': typeof ApiPublicWaktuSolatRoute
   '/api/public/payments/checkout': typeof ApiPublicPaymentsCheckoutRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -128,10 +149,13 @@ export interface FileRoutesByTo {
   '/collections': typeof CollectionsRoute
   '/orders': typeof OrdersRoute
   '/privacy': typeof PrivacyRoute
+  '/qiblah': typeof QiblahRoute
   '/reset-password': typeof ResetPasswordRoute
   '/story': typeof StoryRoute
+  '/waktu-solat': typeof WaktuSolatRoute
   '/api/public/admin': typeof ApiPublicAdminRoute
   '/api/public/shopper-verify': typeof ApiPublicShopperVerifyRoute
+  '/api/public/waktu-solat': typeof ApiPublicWaktuSolatRoute
   '/api/public/payments/checkout': typeof ApiPublicPaymentsCheckoutRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -146,10 +170,13 @@ export interface FileRoutesById {
   '/collections': typeof CollectionsRoute
   '/orders': typeof OrdersRoute
   '/privacy': typeof PrivacyRoute
+  '/qiblah': typeof QiblahRoute
   '/reset-password': typeof ResetPasswordRoute
   '/story': typeof StoryRoute
+  '/waktu-solat': typeof WaktuSolatRoute
   '/api/public/admin': typeof ApiPublicAdminRoute
   '/api/public/shopper-verify': typeof ApiPublicShopperVerifyRoute
+  '/api/public/waktu-solat': typeof ApiPublicWaktuSolatRoute
   '/api/public/payments/checkout': typeof ApiPublicPaymentsCheckoutRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -165,10 +192,13 @@ export interface FileRouteTypes {
     | '/collections'
     | '/orders'
     | '/privacy'
+    | '/qiblah'
     | '/reset-password'
     | '/story'
+    | '/waktu-solat'
     | '/api/public/admin'
     | '/api/public/shopper-verify'
+    | '/api/public/waktu-solat'
     | '/api/public/payments/checkout'
     | '/api/public/payments/webhook'
     | '/lovable/email/auth/preview'
@@ -182,10 +212,13 @@ export interface FileRouteTypes {
     | '/collections'
     | '/orders'
     | '/privacy'
+    | '/qiblah'
     | '/reset-password'
     | '/story'
+    | '/waktu-solat'
     | '/api/public/admin'
     | '/api/public/shopper-verify'
+    | '/api/public/waktu-solat'
     | '/api/public/payments/checkout'
     | '/api/public/payments/webhook'
     | '/lovable/email/auth/preview'
@@ -199,10 +232,13 @@ export interface FileRouteTypes {
     | '/collections'
     | '/orders'
     | '/privacy'
+    | '/qiblah'
     | '/reset-password'
     | '/story'
+    | '/waktu-solat'
     | '/api/public/admin'
     | '/api/public/shopper-verify'
+    | '/api/public/waktu-solat'
     | '/api/public/payments/checkout'
     | '/api/public/payments/webhook'
     | '/lovable/email/auth/preview'
@@ -217,10 +253,13 @@ export interface RootRouteChildren {
   CollectionsRoute: typeof CollectionsRoute
   OrdersRoute: typeof OrdersRoute
   PrivacyRoute: typeof PrivacyRoute
+  QiblahRoute: typeof QiblahRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   StoryRoute: typeof StoryRoute
+  WaktuSolatRoute: typeof WaktuSolatRoute
   ApiPublicAdminRoute: typeof ApiPublicAdminRoute
   ApiPublicShopperVerifyRoute: typeof ApiPublicShopperVerifyRoute
+  ApiPublicWaktuSolatRoute: typeof ApiPublicWaktuSolatRoute
   ApiPublicPaymentsCheckoutRoute: typeof ApiPublicPaymentsCheckoutRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
@@ -278,6 +317,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/qiblah': {
+      id: '/qiblah'
+      path: '/qiblah'
+      fullPath: '/qiblah'
+      preLoaderRoute: typeof QiblahRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
@@ -292,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/waktu-solat': {
+      id: '/waktu-solat'
+      path: '/waktu-solat'
+      fullPath: '/waktu-solat'
+      preLoaderRoute: typeof WaktuSolatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/admin': {
       id: '/api/public/admin'
       path: '/api/public/admin'
@@ -304,6 +357,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/shopper-verify'
       fullPath: '/api/public/shopper-verify'
       preLoaderRoute: typeof ApiPublicShopperVerifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/waktu-solat': {
+      id: '/api/public/waktu-solat'
+      path: '/api/public/waktu-solat'
+      fullPath: '/api/public/waktu-solat'
+      preLoaderRoute: typeof ApiPublicWaktuSolatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/payments/checkout': {
@@ -345,10 +405,13 @@ const rootRouteChildren: RootRouteChildren = {
   CollectionsRoute: CollectionsRoute,
   OrdersRoute: OrdersRoute,
   PrivacyRoute: PrivacyRoute,
+  QiblahRoute: QiblahRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   StoryRoute: StoryRoute,
+  WaktuSolatRoute: WaktuSolatRoute,
   ApiPublicAdminRoute: ApiPublicAdminRoute,
   ApiPublicShopperVerifyRoute: ApiPublicShopperVerifyRoute,
+  ApiPublicWaktuSolatRoute: ApiPublicWaktuSolatRoute,
   ApiPublicPaymentsCheckoutRoute: ApiPublicPaymentsCheckoutRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,

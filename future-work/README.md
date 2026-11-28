@@ -18,4 +18,4 @@ git apply future-work/<proposal>/<proposal>.patch
 | [`whatsapp-button/`](whatsapp-button/) | **Superseded by `social-dock/`.** Floating WhatsApp chat button with a bilingual ready message. |
 | [`social-dock/`](social-dock/) | **Applied 27 Nov 2026.** Floating contact button that opens into WhatsApp, Facebook, Instagram and Threads. |
 | [`story-interactive/`](story-interactive/) | **Applied 27 Nov 2026.** Story page layout with words that light up as you read, a tap-to-reveal *maqām* meaning card, and حضور القلب drawn in gold. |
-| [`qiblah-watch/`](qiblah-watch/) | **In discussion.** Watch (prayer times) and Qiblah compass pages opened from the phone button. |
+| [`qiblah-watch/`](qiblah-watch/) | **Built.** Watch (prayer times) and Qiblah compass pages opened from the phone button. |

@@ -1,4 +1,5 @@
-import { AtSign, Facebook, Instagram, Smartphone, X, Youtube, type LucideIcon } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { AtSign, Clock, Compass, Facebook, Instagram, Smartphone, X, Youtube, type LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState, type ComponentType } from "react";
 
 import { useLang } from "@/lib/i18n";
@@ -21,7 +22,7 @@ function WhatsAppGlyph({ className = "" }: { className?: string }) {
 
 type Channel = { key: string; label: string; href: string; icon: LucideIcon | ComponentType<{ className?: string }> };
 
-/** Floating contact button that opens into WhatsApp, Facebook, Instagram, Threads and YouTube. */
+/** Floating contact button: social links slide up; Prayer times and Qiblah slide out to the left. */
 export function SocialDock() {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -43,6 +44,10 @@ export function SocialDock() {
     { key: "instagram", label: "Instagram", href: INSTAGRAM_URL, icon: Instagram },
     { key: "threads", label: "Threads", href: THREADS_URL, icon: AtSign },
     { key: "youtube", label: "YouTube", href: YOUTUBE_URL, icon: Youtube },
+  ];
+  const tools: { to: "/waktu-solat" | "/qiblah"; label: string; icon: LucideIcon }[] = [
+    { to: "/waktu-solat", label: t("Prayer times", "Waktu solat"), icon: Clock },
+    { to: "/qiblah", label: t("Qiblah", "Kiblat"), icon: Compass },
   ];
 
   return (
@@ -75,6 +80,26 @@ export function SocialDock() {
           );
         })}
       </ul>
+      <div className="relative">
+        {/* Watch and Qiblah slide out to the left of the phone button. */}
+        <ul aria-hidden={!open} className="absolute right-full top-1/2 mr-3 flex -translate-y-1/2 flex-row-reverse items-center gap-3">
+          {tools.map((tool, i) => {
+            const Icon = tool.icon;
+            return (
+              <li
+                key={tool.to}
+                style={{ transitionDelay: open ? `${i * 60}ms` : "0ms" }}
+                className={`transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? "translate-x-0 opacity-100" : "pointer-events-none translate-x-3 opacity-0"}`}
+              >
+                <Link to={tool.to} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)} aria-label={tool.label} title={tool.label} className="group flex">
+                  <span className="flex size-12 items-center justify-center rounded-full bg-brand-gold text-brand-forest ring-1 ring-brand-gold/50 shadow-[0_8px_24px_-8px_rgb(0_0_0/0.45)] group-hover:scale-105">
+                    <Icon className="size-5" />
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       <button
         type="button"
         aria-expanded={open}
@@ -85,6 +110,7 @@ export function SocialDock() {
       >
         <span className={`transition-transform duration-300 ${open ? "rotate-90" : ""}`}>{open ? <X className="size-6" /> : <Smartphone className="size-6" />}</span>
       </button>
+      </div>
     </div>
   );
 }
