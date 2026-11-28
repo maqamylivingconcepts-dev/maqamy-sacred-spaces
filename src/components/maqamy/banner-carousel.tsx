@@ -17,31 +17,51 @@ export function useBanners() {
 
 export function BannerCarousel({ banners, tone = "light" }: { banners: Banner[]; tone?: "light" | "dark" }) {
   const [index, setIndex] = useState(0);
-  const [soundOn, setSoundOn] = useState(false);
+  // Sound is remembered per banner; until the visitor sets it, the first tap anywhere turns it on.
+  const [interacted, setInteracted] = useState(false);
+  const [soundFor, setSoundFor] = useState<Record<string, boolean>>({});
   const timer = useRef(0);
   const videos = useRef(new Map<string, HTMLVideoElement>());
   const count = banners.length;
   const current = banners[index % Math.max(count, 1)];
 
   const next = () => setIndex((value) => (value + 1) % count);
+  const soundOn = current ? (soundFor[current.id] ?? interacted) : false;
 
   // Browsers block autoplay-with-sound until the visitor interacts once;
   // the first tap/scroll/keypress anywhere unmutes the current video.
   useEffect(() => {
-    const enable = () => setSoundOn(true);
-    window.addEventListener("pointerdown", enable, { once: true });
-    window.addEventListener("keydown", enable, { once: true });
-    window.addEventListener("touchstart", enable, { once: true });
-    return () => {
-      window.removeEventListener("pointerdown", enable);
-      window.removeEventListener("keydown", enable);
-      window.removeEventListener("touchstart", enable);
-    };
+    const events = ["pointerdown", "keydown", "touchstart"] as const;
+    const stop = () => events.forEach((type) => window.removeEventListener(type, enable));
+    function enable(e: Event) {
+      // The sound button decides for itself; don't let the same tap switch sound on and back off.
+      if (e.target instanceof Element && e.target.closest("[data-banner-sound]")) return;
+      setInteracted(true);
+      stop();
+    }
+    events.forEach((type) => window.addEventListener(type, enable));
+    return stop;
   }, []);
 
+  // Only the banner on screen plays (and only it can be heard); every other video is paused and silent.
   useEffect(() => {
-    for (const video of videos.current.values()) video.muted = !soundOn;
-  }, [soundOn, index]);
+    for (const [id, video] of videos.current) {
+      if (current && id === current.id) {
+        video.muted = !soundOn;
+        if (video.paused) void video.play().catch(() => { video.muted = true; void video.play().catch(() => undefined); });
+      } else {
+        video.muted = true;
+        if (!video.paused) video.pause();
+      }
+    }
+  }, [current, soundOn]);
+
+  // A video starts from the beginning each time its slide comes into view.
+  useEffect(() => {
+    if (!current || current.kind !== "video") return;
+    const video = videos.current.get(current.id);
+    if (video) video.currentTime = 0;
+  }, [current]);
 
   useEffect(() => {
     window.clearTimeout(timer.current);
@@ -70,15 +90,13 @@ export function BannerCarousel({ banners, tone = "light" }: { banners: Banner[];
                 <video
                   src={banner.url}
                   className="h-full w-full object-cover"
-                  muted={!soundOn}
+                  muted
                   playsInline
-                  autoPlay={active}
-                  onEnded={next}
+                  preload={active ? "auto" : "metadata"}
+                  onEnded={() => { if (active) next(); }}
                   ref={(el) => {
                     if (!el) { videos.current.delete(banner.id); return; }
                     videos.current.set(banner.id, el);
-                    el.muted = !soundOn;
-                    if (active) { el.currentTime = 0; void el.play().catch(() => undefined); }
                   }}
                 />
               ) : (
@@ -91,8 +109,9 @@ export function BannerCarousel({ banners, tone = "light" }: { banners: Banner[];
         {current.kind === "video" ? (
           <button
             type="button"
+            data-banner-sound
             aria-label={soundOn ? "Mute video sound" : "Turn video sound on"}
-            onClick={() => setSoundOn((on) => !on)}
+            onClick={(e) => { e.stopPropagation(); setInteracted(true); setSoundFor((prev) => ({ ...prev, [current.id]: !soundOn })); }}
             className={`absolute bottom-4 left-5 flex h-9 w-9 items-center justify-center rounded-full backdrop-blur transition-all duration-300 sm:left-8 ${dark ? "bg-brand-forest/10 text-brand-forest hover:bg-brand-forest/20" : "bg-brand-cream/15 text-brand-cream hover:bg-brand-cream/30"}`}
           >
             {soundOn ? (
